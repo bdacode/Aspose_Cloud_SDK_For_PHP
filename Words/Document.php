@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with Word document level aspects
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -26,7 +24,6 @@ class Document {
      * @param string $importFormatModes
      * @param string $sourceFolder (name of the folder where documents are present)
      */
-
     public function appendDocument($appendDocs, $importFormatModes, $sourceFolder) {
         try {
             //check whether files are set or not
@@ -75,7 +72,6 @@ class Document {
     /*
      * Get Resource Properties information like document source format, IsEncrypted, IsSigned and document properties
      */
-
     public function getDocumentInfo() {
         try {
             //check whether files are set or not
@@ -105,7 +101,6 @@ class Document {
      * Get Resource Properties information like document source format, IsEncrypted, IsSigned and document properties
       @param string $propertyName
      */
-
     public function getProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -140,7 +135,6 @@ class Document {
       @param string $propertyName
       @param string $propertyValue
      */
-
     public function setProperty($propertyName, $propertyValue) {
         try {
             //check whether files are set or not
@@ -270,7 +264,6 @@ class Document {
      * Delete a document property
       @param string $propertyName
      */
-
     public function deleteProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -302,7 +295,6 @@ class Document {
     /*
      * Get Document's properties
      */
-
     public function getProperties() {
         try {
             //check whether files are set or not
@@ -336,7 +328,6 @@ class Document {
      * @param string $outputPath
      * @param string $outputFormat
      */
-
     public function convertLocalFile($inputPath = '', $outputPath = '', $outputFormat = '') {
         try {
             //check whether file is set or not

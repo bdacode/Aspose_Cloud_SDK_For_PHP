@@ -1,9 +1,7 @@
 <?php
-
 /*
  * converts pages or document into different formats
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -26,7 +24,6 @@ class Converter {
     /*
      * convert a document to SaveFormat
      */
-
     public function convert() {
         try {
             //check whether file is set or not

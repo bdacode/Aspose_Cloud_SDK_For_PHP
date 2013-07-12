@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with PDF document level aspects
  */
-
 namespace Aspose\Cloud\Pdf;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -23,7 +21,6 @@ class Document {
     /*
      * Gets the page count of the specified PDF document
      */
-
     public function getPageCount() {
         //build URI
         $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages';
@@ -47,7 +44,6 @@ class Document {
      * @param string $endPage (page number to end merging second PDF: enter 0 to merge complete document)
      * @param string $sourceFolder (name of the folder where base/first and second input PDFs are present)
      */
-
     public function appendDocument($basePdf, $newPdf, $startPage = 0, $endPage = 0, $sourceFolder = '') {
         try {
             //check whether files are set or not
@@ -94,7 +90,6 @@ class Document {
      * Merges tow or more PDF documents
      * @param array $sourceFiles (list of PDF files to be merged)
      */
-
     public function mergeDocuments(array $sourceFiles = array()) {
         try {
             $mergedFileName = $this->fileName;
@@ -132,7 +127,6 @@ class Document {
      * @param string $pdfFileName (name of the PDF file to create)
      * @param string $htmlFileName (name of the HTML template file)
      */
-
     public function createFromHtml($pdfFileName, $htmlFileName) {
         try {
             //check whether files are set or not
@@ -173,7 +167,6 @@ class Document {
      * @param string $xsltFileName (name of the XSLT template file)
      * @param string $xmlFileName (name of the XML file)
      */
-
     public function createFromXml($pdfFileName, $xsltFileName, $xmlFileName) {
         try {
             //check whether files are set or not
@@ -213,7 +206,6 @@ class Document {
     /*
      * Gets the FormField count of the specified PDF document
      */
-
     public function getFormFieldCount() {
         //build URI
         $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/fields';
@@ -232,7 +224,6 @@ class Document {
     /*
      * Gets the list of FormFields from the specified PDF document
      */
-
     public function getFormFields() {
         //build URI
         $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/fields';
@@ -252,7 +243,6 @@ class Document {
      * Gets a particular form field
      * $fieldName
      */
-
     public function getFormField($fieldName) {
         //build URI
         $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/fields/' . $fieldName;
@@ -272,7 +262,6 @@ class Document {
      * Creates an Empty Pdf document
      * @param string $pdfFileName (name of the PDF file to create)
      */
-
     public function createEmptyPdf($pdfFileName) {
         try {
             //check whether files are set or not
@@ -307,7 +296,6 @@ class Document {
     /*
      * Adds new page to opened Pdf document
      */
-
     public function addNewPage() {
         try {
             //check whether files are set or not
@@ -343,7 +331,6 @@ class Document {
      * Deletes selected page from Pdf document
      * $pageNumber
      */
-
     public function deletePage($pageNumber) {
         try {
             //check whether files are set or not
@@ -380,7 +367,6 @@ class Document {
      * $pageNumber
      * $newLocation
      */
-
     public function movePage($pageNumber, $newLocation) {
         try {
             //check whether files are set or not
@@ -419,7 +405,6 @@ class Document {
      * $imageIndex
      * $imageStream
      */
-
     public function replaceImageUsingStream($pageNumber, $imageIndex, $imageStream) {
         try {
             //check whether files are set or not
@@ -458,7 +443,6 @@ class Document {
      * $imageIndex
      * $fileName
      */
-
     public function replaceImageUsingFile($pageNumber, $imageIndex, $fileName) {
         try {
             //check whether files are set or not
@@ -494,7 +478,6 @@ class Document {
     /*
      * Get all the properties of the specified document	
      */
-
     public function getDocumentProperties() {
         try {
 
@@ -520,7 +503,6 @@ class Document {
      * Get specified properity of the document	
      * @param string $propertyName
      */
-
     public function getDocumentProperty($propertyName = '') {
         try {
 
@@ -550,7 +532,6 @@ class Document {
      * @param string $propertyName
      * @param string $propertyValue
      */
-
     public function setDocumentProperty($propertyName = '', $propertyValue = '') {
         try {
 
@@ -581,7 +562,6 @@ class Document {
     /*
      * Remove all properties of the document	
      */
-
     public function removeAllProperties() {
         try {
 

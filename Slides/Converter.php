@@ -1,9 +1,7 @@
 <?php
-
 /*
  * converts pages or document into different formats
  */
-
 namespace Aspose\Cloud\Slides;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -28,7 +26,6 @@ class Converter {
      * @param string $slideNumber
      * @param string $imageFormat
      */
-
     public function convertToImage($slideNumber, $imageFormat) {
         try {
             //check whether file is set or not
@@ -60,7 +57,6 @@ class Converter {
      * @param string $width
      * @param string $height
      */
-
     public function convertToImagebySize($slideNumber, $imageFormat, $width, $height) {
         try {
             //check whether file is set or not
@@ -88,7 +84,6 @@ class Converter {
     /*
      * convert a document to SaveFormat
      */
-
     public function convert() {
         try {
             //check whether file is set or not

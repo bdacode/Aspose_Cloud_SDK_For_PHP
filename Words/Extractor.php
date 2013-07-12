@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Extract various types of information from the document
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -22,7 +20,6 @@ class Extractor {
     /*
      * Gets Text items list from document
      */
-
     public function getText() {
         try {
             //check whether file is set or not
@@ -49,7 +46,6 @@ class Extractor {
      * @param int $index
      * @param string $OLEFormat
      */
-
     public function getoleData($index, $OLEFormat) {
         try {
             //check whether file is set or not
@@ -81,7 +77,6 @@ class Extractor {
      * @param int $index
      * @param string $renderformat
      */
-
     public function getimageData($index, $renderFormat) {
         try {
             //check whether file is set or not
@@ -113,7 +108,6 @@ class Extractor {
      * @param int $index
      * @param string $renderformat
      */
-
     public function convertDrawingObject($index, $renderFormat) {
         try {
             //check whether file is set or not
@@ -143,7 +137,6 @@ class Extractor {
     /*
      * Get the List of drawing object from document	
      */
-
     public function getDrawingObjectList() {
         try {
             //check whether file is set or not
@@ -172,7 +165,6 @@ class Extractor {
      * @param string $objectURI
      * @param string $outputPath
      */
-
     public function getDrawingObject($objectURI, $outputPath) {
         try {
             //check whether file is set or not
@@ -233,7 +225,6 @@ class Extractor {
      * Get the List of drawing object from document	
      * @param string outputPath
      */
-
     public function getDrawingObjects($outputPath) {
         try {
             //check whether file is set or not

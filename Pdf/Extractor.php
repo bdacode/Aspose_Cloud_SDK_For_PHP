@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Extract various types of information from the document
  */
-
 namespace Aspose\Cloud\Pdf;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -23,7 +21,6 @@ class Extractor {
      * Gets number of images in a specified page
      * @param $pageNumber
      */
-
     public function getImageCount($pageNumber) {
         try {
             //check whether file is set or not
@@ -50,7 +47,6 @@ class Extractor {
      * @param int $imageIndex
      * @param string $imageFormat
      */
-
     public function getImageDefaultSize($pageNumber, $imageIndex, $imageFormat) {
         try {
             //check whether file is set or not
@@ -85,7 +81,6 @@ class Extractor {
      * @param int $imageWidth
      * @param int $imageHeight
      */
-
     public function getImageCustomSize($pageNumber, $imageIndex, $imageFormat, $imageWidth, $imageHeight) {
         try {
             //check whether file is set or not

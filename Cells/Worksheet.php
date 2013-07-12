@@ -1,9 +1,7 @@
 <?php
-
 /*
  * This class contains features to work with charts
  */
-
 namespace Aspose\Cloud\Cells;
 
 use Aspose\Cloud\Common\Utils;
@@ -25,7 +23,6 @@ class Worksheet {
      * $offset
      * $count
      */
-
     public function getCellsList($offset, $count) {
         try {
             //check whether file is set or not
@@ -58,7 +55,6 @@ class Worksheet {
     /*
      * Gets a list of rows from the worksheet
      */
-
     public function getRowsList() {
         try {
             //check whether file is set or not
@@ -90,7 +86,6 @@ class Worksheet {
     /*
      * Gets a list of columns from the worksheet
      */
-
     public function getColumnsList() {
         try {
             //check whether file is set or not
@@ -125,7 +120,6 @@ class Worksheet {
      * $offset
      * $count
      */
-
     public function getMaxColumn($offset, $count) {
         try {
             //check whether file is set or not
@@ -151,7 +145,6 @@ class Worksheet {
      * $offset
      * $count
      */
-
     public function getMaxRow($offset, $count) {
         try {
             //check whether file is set or not
@@ -177,7 +170,6 @@ class Worksheet {
      * $offset
      * $count
      */
-
     public function getCellsCount($offset, $count) {
         try {
             //check whether file is set or not
@@ -201,7 +193,6 @@ class Worksheet {
     /*
      * Gets AutoShape count in the worksheet
      */
-
     public function getAutoShapesCount() {
         try {
             //check whether file is set or not
@@ -225,7 +216,6 @@ class Worksheet {
      * Gets a specific AutoShape from the sheet
      * $index
      */
-
     public function getAutoShapeByIndex($index) {
         try {
             //check whether file is set or not
@@ -248,7 +238,6 @@ class Worksheet {
     /*
      * Gets charts count in the worksheet
      */
-
     public function getChartsCount() {
         try {
             //check whether file is set or not
@@ -272,7 +261,6 @@ class Worksheet {
      * Gets a specific chart from the sheet
      * $index
      */
-
     public function getChartByIndex($index) {
         try {
             //check whether file is set or not
@@ -295,7 +283,6 @@ class Worksheet {
     /*
      * Gets hyperlinks count in the worksheet
      */
-
     public function getHyperlinksCount() {
         try {
             //check whether file is set or not
@@ -319,7 +306,6 @@ class Worksheet {
      * Gets a specific hyperlink from the sheet
      * $index
      */
-
     public function getHyperlinkByIndex($index) {
         try {
             //check whether file is set or not

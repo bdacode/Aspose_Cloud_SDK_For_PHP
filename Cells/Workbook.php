@@ -1,9 +1,7 @@
 <?php
-
 /*
  * This class contains features to work with charts
  */
-
 namespace Aspose\Cloud\Cells;
 
 use Aspose\Cloud\Common\Utils;
@@ -21,7 +19,6 @@ class Workbook {
     /*
      * Get Document's properties
      */
-
     public function getProperties() {
         try {
             //check whether files are set or not
@@ -46,7 +43,6 @@ class Workbook {
      * Get Resource Properties information like document source format, IsEncrypted, IsSigned and document properties
       @param string $propertyName
      */
-
     public function getProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -74,7 +70,6 @@ class Workbook {
       @param string $propertyName
       @param string $propertyValue
      */
-
     public function setProperty($propertyName, $propertyValue) {
         try {
             //check whether files are set or not
@@ -106,7 +101,6 @@ class Workbook {
     /*
      * Remove All Document's properties
      */
-
     public function removeAllProperties() {
         try {
             //check whether files are set or not
@@ -134,7 +128,6 @@ class Workbook {
      * Delete a document property
       @param string $propertyName
      */
-
     public function removeProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -160,7 +153,6 @@ class Workbook {
     /*
      * Create Empty Workbook
      */
-
     public function createEmptyWorkbook() {
         try {
             //build URI to merge Docs
@@ -179,7 +171,6 @@ class Workbook {
      * Create Empty Workbook
      * @param string $templateFileName
      */
-
     public function createWorkbookFromTemplate($templateFileName) {
         try {
             if ($templateFileName == '')
@@ -201,7 +192,6 @@ class Workbook {
      * @param string $templateFileName
      * @param string $dataFile	
      */
-
     public function createWorkbookFromSmartMarkerTemplate($templateFileName, $dataFile) {
         try {
             if ($templateFileName == '')
@@ -224,7 +214,6 @@ class Workbook {
      * Process Smartmaker Datafile
      * @param string $dataFile	
      */
-
     public function processSmartMarker($dataFile) {
         try {
             if ($dataFile == '')
@@ -244,7 +233,6 @@ class Workbook {
     /*
      * Get Worksheets Count in Workbook
      */
-
     public function getWorksheetsCount() {
         try {
             if ($this->fileName == '')
@@ -264,7 +252,6 @@ class Workbook {
     /*
      * Get Names Count in Workbook	
      */
-
     public function getNamesCount() {
         try {
             if ($this->fileName == '')
@@ -284,7 +271,6 @@ class Workbook {
     /*
      * Get Default Style
      */
-
     public function getDefaultStyle() {
         try {
             if ($this->fileName == '')

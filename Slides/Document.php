@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with PowerPoint document level aspects
  */
-
 namespace Aspose\Cloud\Slides;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -24,7 +22,6 @@ class Document {
     /*
      * Finds the slide count of the specified PowerPoint document
      */
-
     public function getSlideCount($storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -57,7 +54,6 @@ class Document {
      * @param string $oldText
      * @param string $newText
      */
-
     public function replaceText() {
         $parameters = func_get_args();
 
@@ -105,7 +101,6 @@ class Document {
     /*
      * Gets all the text items in a slide or presentation
      */
-
     public function getAllTextItems() {
         $parameters = func_get_args();
 
@@ -140,7 +135,6 @@ class Document {
     /*
      * Deletes all slides from a presentation
      */
-
     public function deleteAllSlides($storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -179,7 +173,6 @@ class Document {
     /*
      * Get Document's properties
      */
-
     public function getDocumentProperties() {
         try {
             //check whether files are set or not
@@ -211,7 +204,6 @@ class Document {
      * Get Resource Properties information like document source format, IsEncrypted, IsSigned and document properties
       @param string $propertyName
      */
-
     public function getDocumentProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -244,7 +236,6 @@ class Document {
     /*
      * Remove All Document's properties
      */
-
     public function removeAllProperties() {
         try {
             //check whether files are set or not
@@ -278,7 +269,6 @@ class Document {
      * Delete a document property
       @param string $propertyName
      */
-
     public function deleteDocumentProperty($propertyName) {
         try {
             //check whether files are set or not
@@ -312,7 +302,6 @@ class Document {
       @param string $propertyName
       @param string $propertyValue
      */
-
     public function setProperty($propertyName, $propertyValue) {
         try {
             //check whether files are set or not
@@ -352,7 +341,6 @@ class Document {
      * Add custom document properties
       @param array $propertiesList
      */
-
     public function addCustomProperty($propertiesList) {
         try {
             //check whether files are set or not
@@ -386,7 +374,6 @@ class Document {
      * @param string $outputPath
      * @param string $saveFormat
      */
-
     public function saveAs($outputPath, $saveFormat, $storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -432,7 +419,6 @@ class Document {
      * @param string $outputPath
      * @param string $saveFormat
      */
-
     public function saveSlideAs($slideNumber, $outputPath, $saveFormat) {
         try {
             //check whether file is set or not

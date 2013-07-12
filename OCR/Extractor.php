@@ -1,16 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Extractor
- *
- * @author awaistoor
- */
-
 namespace Aspose\Cloud\OCR;
 
 use Aspose\Cloud\Common\Utils;

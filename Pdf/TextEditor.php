@@ -1,9 +1,7 @@
 <?php
-
 /*
  * This class contains features to work with text
  */
-
 namespace Aspose\Cloud\Pdf;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -23,7 +21,6 @@ class TextEditor {
     /*
      * Gets raw text from the whole PDF file or a specific page 
      */
-
     public function getText() {
         $parameters = func_get_args();
 
@@ -58,7 +55,6 @@ class TextEditor {
     /*
      * Gets text items from the whole PDF file or a specific page 
      */
-
     public function getTextItems() {
         $parameters = func_get_args();
 
@@ -98,7 +94,6 @@ class TextEditor {
      * Gets count of the fragments from a particular page
      * $pageNumber
      */
-
     public function getFragmentCount($pageNumber) {
         try {
             //check whether file is set or not
@@ -124,7 +119,6 @@ class TextEditor {
      * @param number $pageNumber
      * @param number $fragmentNumber
      */
-
     public function getSegmentCount($pageNumber = '', $fragmentNumber = '') {
         try {
             //check whether file is set or not
@@ -157,7 +151,6 @@ class TextEditor {
      * $pageNumber
      * $fragmentNumber
      */
-
     public function getTextFormat() {
         $args = func_get_args();
         try {
@@ -196,7 +189,6 @@ class TextEditor {
      * @param string $oldText
      * @param string $newText
      */
-
     public function replaceText() {
         $parameters = func_get_args();
 

@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Extract various types of information from the document
  */
-
 namespace Aspose\Cloud\Slides;
 
 use Aspose\Cloud\Common\Utils;
@@ -21,7 +19,6 @@ class Extractor {
     /*
      * Gets total number of images in a presentation
      */
-
     public function getImageCount($storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -51,7 +48,6 @@ class Extractor {
      * Gets number of images in the specified slide
      * @param $slidenumber
      */
-
     public function getSlideImageCount($slidenumber, $storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -81,7 +77,6 @@ class Extractor {
      * Gets all shapes from the specified slide
      * @param $slidenumber
      */
-
     public function getShapes($slidenumber, $storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -124,7 +119,6 @@ class Extractor {
      * Get color scheme from the specified slide
      * $slideNumber
      */
-
     public function getColorScheme($slideNumber, $storageName = '') {
         try {
             //check whether file is set or not
@@ -152,7 +146,6 @@ class Extractor {
      * Get font scheme from the specified slide
      * $slideNumber
      */
-
     public function getFontScheme($slideNumber, $storageName = '') {
         try {
             //check whether file is set or not
@@ -180,7 +173,6 @@ class Extractor {
      * Get format scheme from the specified slide
      * $slideNumber
      */
-
     public function getFormatScheme($slideNumber, $storageName = '') {
         try {
             //check whether file is set or not
@@ -208,7 +200,6 @@ class Extractor {
      * Gets placeholder count from a particular slide
      * $slideNumber
      */
-
     public function getPlaceholderCount($slideNumber, $storageName = '', $folder = '') {
         try {
             //check whether file is set or not
@@ -240,7 +231,6 @@ class Extractor {
      * $slideNumber
      * $placeholderIndex
      */
-
     public function getPlaceholder($slideNumber, $placeholderIndex, $storageName = '', $folder = '') {
         try {
             //check whether file is set or not

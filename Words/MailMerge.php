@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with Word document builder aspects
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -18,7 +16,6 @@ class MailMerge {
      * @param string $fileName 
      * @param string $strXML
      */
-
     public function executeMailMerge($fileName, $strXML) {
         try {
             //check whether files are set or not
@@ -56,7 +53,6 @@ class MailMerge {
      * @param string $fileName 
      * @param string $strXML
      */
-
     public function executeMailMergewithRegions($fileName, $strXML) {
         try {
             //check whether files are set or not
@@ -95,7 +91,6 @@ class MailMerge {
      * @param string $strXML
      * @param string $documentFolder
      */
-
     public function executeTemplate($fileName, $strXML, $documentFolder = '') {
         try {
             //check whether files are set or not

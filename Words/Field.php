@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with Word document builder aspects
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -21,7 +19,6 @@ class Field {
      * @param string $isTop
      * @param string $setPageNumberOnFirstPage 
      */
-
     public function insertPageNumber($fileName, $alignment, $format, $isTop, $setPageNumberOnFirstPage) {
         try {
             //check whether files are set or not
@@ -62,7 +59,6 @@ class Field {
      * Gets all merge filed names from document.
      * @param string $fileName  
      */
-
     public function getMailMergeFieldNames($fileName) {
         try {
             //check whether file is set or not

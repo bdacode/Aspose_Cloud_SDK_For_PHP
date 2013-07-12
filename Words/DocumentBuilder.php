@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with Word document builder aspects
  */
-
 namespace Aspose\Cloud\Words;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -19,7 +17,6 @@ class DocumentBuilder {
      * @param string $text
      * @param string $rotationAngle 
      */
-
     public function insertWatermarkText($fileName, $text, $rotationAngle) {
         try {
             //check whether files are set or not
@@ -61,7 +58,6 @@ class DocumentBuilder {
      * @param string $imageFile
      * @param string $rotationAngle 
      */
-
     public function insertWatermarkImage($fileName, $imageFile, $rotationAngle) {
         try {
             //check whether files are set or not
@@ -102,7 +98,6 @@ class DocumentBuilder {
      * @param string $isMatchCase
      * @param string $isMatchWholeWord
      */
-
     public function replaceText($fileName, $oldValue, $newValue, $isMatchCase, $isMatchWholeWord) {
         try {
             //check whether files are set or not

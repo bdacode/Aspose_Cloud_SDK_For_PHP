@@ -1,11 +1,4 @@
 <?php
-
-/**
- *
- * Copyright 2013 Aspose, Inc.
- *
- */
-
 namespace Aspose\Cloud\Common;
 
 use Aspose\Cloud\Exception\AsposeCloudException as Exception;

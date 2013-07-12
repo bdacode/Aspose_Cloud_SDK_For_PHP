@@ -1,9 +1,7 @@
 <?php
-
 /*
  * Deals with Annotations, Bookmarks, Attachments and Links in PDF document
  */
-
 namespace Aspose\Cloud\Pdf;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -23,7 +21,6 @@ class AnnotationEditor {
      * Gets number of annotations on a specified document page
      * @param $pageNumber
      */
-
     public function getAnnotationsCount($pageNumber) {
         try {
             //check whether file is set or not
@@ -44,7 +41,6 @@ class AnnotationEditor {
      * @param $pageNumber
      * @param $annotationIndex
      */
-
     public function getAnnotation($pageNumber, $annotationIndex) {
         try {
             //check whether file is set or not
@@ -64,7 +60,6 @@ class AnnotationEditor {
      * Gets list of all the annotations on a specified document page
      * @param $pageNumber
      */
-
     public function getAllAnnotations($pageNumber) {
         try {
             //check whether file is set or not
@@ -84,7 +79,6 @@ class AnnotationEditor {
     /*
      * Gets total number of Bookmarks in a Pdf document
      */
-
     public function getBookmarksCount() {
         try {
             //check whether file is set or not
@@ -104,7 +98,6 @@ class AnnotationEditor {
      * Gets number of child bookmarks in a specfied parent bookmark
      * @param $parent
      */
-
     public function getChildBookmarksCount($parent) {
         try {
             //check whether file is set or not
@@ -124,7 +117,6 @@ class AnnotationEditor {
      * Gets a specfied Bookmark from a PDF document
      * @param $bookmarkIndex
      */
-
     public function getBookmark($bookmarkIndex) {
         try {
             //check whether file is set or not
@@ -145,7 +137,6 @@ class AnnotationEditor {
      * @param $parentIndex
      * @param $childIndex
      */
-
     public function getChildBookmark($parentIndex, $childIndex) {
         try {
             //check whether file is set or not
@@ -165,7 +156,6 @@ class AnnotationEditor {
      * Checks whether selected bookmark is parent or child Gets a specfied child Bookmark for selected parent bookmark in Pdf document
      * @param $bookmarkIndex
      */
-
     public function isChildBookmark($bookmarkIndex) {
         try {
             //check whether file is set or not
@@ -186,7 +176,6 @@ class AnnotationEditor {
     /*
      * Gets list of all the Bookmarks in a Pdf document
      */
-
     public function getAllBookmarks() {
         try {
             //check whether file is set or not
@@ -206,7 +195,6 @@ class AnnotationEditor {
     /*
      * Gets number of attachments in the Pdf document
      */
-
     public function getAttachmentsCount() {
         try {
             //check whether file is set or not
@@ -226,7 +214,6 @@ class AnnotationEditor {
      * Gets selected attachment from Pdf document
      * @param $attachmentIndex
      */
-
     public function getAttachment($attachmentIndex) {
         try {
             //check whether file is set or not
@@ -245,7 +232,6 @@ class AnnotationEditor {
     /*
      * Gets List of all the attachments in Pdf document
      */
-
     public function getAllAttachments() {
         try {
             //check whether file is set or not
@@ -266,7 +252,6 @@ class AnnotationEditor {
      * Download the selected attachment from Pdf document
      * @param string $attachmentIndex
      */
-
     public function downloadAttachment($attachmentIndex) {
         try {
             //check whether files are set or not
@@ -294,7 +279,6 @@ class AnnotationEditor {
      * Gets number of links on a specified document page
      * @param $pageNumber
      */
-
     public function getLinksCount($pageNumber) {
         try {
             //check whether file is set or not
@@ -315,7 +299,6 @@ class AnnotationEditor {
      * @param $pageNumber
      * @param $linkIndex
      */
-
     public function getLink($pageNumber, $linkIndex) {
         try {
             //check whether file is set or not
@@ -335,7 +318,6 @@ class AnnotationEditor {
      * Gets list of all the links on a specified document page
      * @param $pageNumber
      */
-
     public function getAllLinks($pageNumber) {
         try {
             //check whether file is set or not

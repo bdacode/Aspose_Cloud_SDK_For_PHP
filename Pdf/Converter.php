@@ -1,9 +1,7 @@
 <?php
-
 /*
  * converts pages or document into different formats
  */
-
 namespace Aspose\Cloud\Pdf;
 
 use Aspose\Cloud\Common\AsposeApp;
@@ -29,7 +27,6 @@ class Converter {
      * @param string $width
      * @param string $height
      */
-
     public function convertToImagebySize($pageNumber, $imageFormat, $width, $height) {
         try {
             //check whether file is set or not
@@ -61,7 +58,6 @@ class Converter {
      * @param string $pageNumber
      * @param string $imageFormat
      */
-
     public function convertToImage($pageNumber, $imageFormat) {
         try {
             //check whether file is set or not
@@ -91,7 +87,6 @@ class Converter {
     /*
      * convert a document to SaveFormat
      */
-
     public function convert() {
         try {
             //check whether file is set or not
@@ -129,7 +124,6 @@ class Converter {
      * @param string $outputFilename
      * @param string $outputFormat
      */
-
     public function convertLocalFile($inputFile = '', $outputFilename = '', $outputFormat = '') {
         try {
             //check whether file is set or not

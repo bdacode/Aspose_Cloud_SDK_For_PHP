@@ -1,9 +1,7 @@
 <?php
-
 /*
  *  Main class that provides methods to perform all the transactions on the storage of a Aspose Application.
  */
-
 namespace Aspose\Cloud\Storage;
 
 use Aspose\Cloud\Common\Utils;
@@ -30,7 +28,6 @@ class Folder {
      * @param string $strFile
      * @param string $strFolder
      */
-
     public function uploadFile($strFile, $strFolder, $storageName = '') {
         try {
             $strRemoteFileName = basename($strFile);
@@ -55,7 +52,6 @@ class Folder {
      *
      * @param string $fileName
      */
-
     public function fileExists($fileName, $storageName = '') {
         try {
             //check whether file is set or not
@@ -85,7 +81,6 @@ class Folder {
      *
      * @param string $fileName
      */
-
     public function deleteFile($fileName, $storageName = '') {
         try {
             //check whether file is set or not
@@ -114,7 +109,6 @@ class Folder {
      * 
      * @param string $strFolder
      */
-
     public function createFolder($strFolder, $storageName = '') {
         try {
             //build URI
@@ -141,7 +135,6 @@ class Folder {
      *
      * @param string $folderName
      */
-
     public function deleteFolder($folderName) {
         try {
             //check whether folder is set or not
@@ -167,7 +160,6 @@ class Folder {
     /*
      * Provides the total / free disc size in bytes for your app
      */
-
     public function getDiscUsage($storageName = '') {
         try {
             //build URI
@@ -191,7 +183,6 @@ class Folder {
      *
      * @param string $fileName
      */
-
     public function getFile($fileName, $storageName = '') {
         try {
             //check whether file is set or not
@@ -219,7 +210,6 @@ class Folder {
      *
      * @param string $strFolder
      */
-
     public function getFilesList($strFolder, $storageName = '') {
         try {
             //build URI
