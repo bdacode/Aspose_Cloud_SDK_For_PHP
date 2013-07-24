@@ -14,6 +14,8 @@ if (!function_exists('json_decode')) {
  * Provides access to the Aspose Platform.
  *
  * @author Imran Anwar <imran.anwar@Aspose.com>
+ * @author Assad Mahmood <assadvirgo@gmail.com>
+ * @author Rvanlaak
  */
 class Utils {
 

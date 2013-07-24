@@ -3,6 +3,12 @@
 * this class represents product information
 */
 
+/**
+ * @author Imran Anwar <imran.anwar@Aspose.com>
+ * @author Assad Mahmood <assadvirgo@gmail.com>
+ * @author Rvanlaak
+ */
+
 namespace Aspose\Cloud\Common;
 
 class Product
