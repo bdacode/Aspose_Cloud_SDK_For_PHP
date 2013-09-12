@@ -33,16 +33,14 @@ class Document {
             if (count($appendDocs) != count($importFormatModes))
                 throw new Exception('Please specify complete documents and import format modes');
 
-            //Build JSON to post
-            $json = "{ 'DocumentEntries': [";
-
-            for ($i = 0; $i < count($appendDocs); $i++) {
-                $json .= "{ 'Href': '' . $sourceFolder . $appendDocs[$i] .
-                        '', 'ImportFormatMode': '' . $importFormatModes[$i] . '' }" .
-                        (($i < (count($appendDocs) - 1)) ? ',' : '');
+            $post_array = array();
+            $i = 0;
+            foreach ($appendDocs as $doc) {
+                $post_array[] = array("Href" => $doc, "ImportFormatMode" => $importFormatModes[$i]);
+                $i++;
             }
-
-            $json .= '  ] }';
+            $data = array("DocumentEntries" => $post_array);
+            $json = json_encode($data);
 
             //build URI to merge Docs
             $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/appendDocument';
