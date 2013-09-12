@@ -36,7 +36,7 @@ class Document {
             $post_array = array();
             $i = 0;
             foreach ($appendDocs as $doc) {
-                $post_array[] = array("Href" => $doc, "ImportFormatMode" => $importFormatModes[$i]);
+                $post_array[] = array("Href" => (($sourceFolder != "" ) ? $sourceFolder . "\\" . $doc : $doc), "ImportFormatMode" => $importFormatModes[$i]);
                 $i++;
             }
             $data = array("DocumentEntries" => $post_array);
