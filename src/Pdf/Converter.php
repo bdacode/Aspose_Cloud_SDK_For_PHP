@@ -102,10 +102,10 @@ class Converter {
             $v_output = Utils::validateOutput($responseStream);
 
             if ($v_output === '') {
-                if ($this->saveformat == 'html') {
+                if ($this->saveFormat == 'html') {
                     $saveFormat = 'zip';
                 } else {
-                    $saveFormat = $this->saveformat;
+                    $saveFormat = $this->saveFormat;
                 }
 
                 $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $saveFormat);
