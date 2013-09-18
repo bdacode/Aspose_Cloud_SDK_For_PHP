@@ -69,18 +69,22 @@ class Document {
 
             $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                //Save merged PDF on server
+            $json = json_decode($responseStream);
+           
+            if ($json->Code == 200) {
                 $folder = new Folder();
-                $outputStream = $folder->GetFile($sourceFolder . '/' . $basePdf);
+                $path = "";
+                if($sourceFolder != ""){
+                    $path = $basePdf;
+                }else{
+                    $path = $sourceFolder  . $basePdf;
+                }
+                $outputStream = $folder->GetFile($path);
                 $outputPath = AsposeApp::$outPutLocation . $basePdf;
                 Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
+            } else {
+                return false;
             }
-            else
-                return $v_output;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
