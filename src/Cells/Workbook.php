@@ -88,7 +88,7 @@ class Workbook {
             $signedURI = Utils::sign($strURI);
             $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
             $json = json_decode($responseStream);
-            if ($json->Code == 200) {
+            if ($json->Code == 201) {
                 return $json->DocumentProperty;
             } else {
                 return false;
