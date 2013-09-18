@@ -192,7 +192,7 @@ class Extractor {
                 if ($json->DrawingObject->ImageDataLink != '') {
                     $strURI = $strURI . '/imageData';
                     $outputPath = $outputPath . '\\DrawingObject_' . $objectIndex . '.jpeg';
-                } else if ($json->DrawingObject->OLEDataLink != '') {
+                } else if ($json->DrawingObject->OleDataLink != '') {
                     $strURI = $strURI . '/oleData';
                     $outputPath = $outputPath . '\\DrawingObject_' . $objectIndex . '.xlsx';
                 } else {
