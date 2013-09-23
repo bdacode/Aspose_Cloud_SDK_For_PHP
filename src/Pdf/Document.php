@@ -74,10 +74,10 @@ class Document {
             if ($json->Code == 200) {
                 $folder = new Folder();
                 $path = "";
-                if($sourceFolder != ""){
+                if($sourceFolder == ""){
                     $path = $basePdf;
                 }else{
-                    $path = $sourceFolder  . $basePdf;
+                    $path = $sourceFolder . '/' . $basePdf;
                 }
                 $outputStream = $folder->GetFile($path);
                 $outputPath = AsposeApp::$outPutLocation . $basePdf;
