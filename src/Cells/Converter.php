@@ -290,7 +290,7 @@ class Converter {
 			if ($saveFormat == '') {
 				throw new Exception('Please Specify a Save Format');
 			}
-			$strURI = Product::$baseProductUri + '/cells/convert?format=' + $saveFormat;
+			$strURI = Product::$baseProductUri . '/cells/convert?format=' . $saveFormat;
 			$signedURI = Utils::sign($strURI);
 			if (!file_exists($inputFile)) {
 				throw new Exception('Input File Doesnt Exists');
@@ -305,7 +305,9 @@ class Converter {
 				}
 				if ($outputFile == '') {
 					$outputFileName = Utils::getFileName($inputFile) . '.' . $outputFormat;
-				}
+				} else {
+          $outputFileName = Utils::getFileName($outputFile) . '.' . $outputFormat;
+        }
 				Utils::saveFile($responseStream, AsposeApp::$outPutLocation . $outputFileName);
 				return $outputFileName;
 			} else {
