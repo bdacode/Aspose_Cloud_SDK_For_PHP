@@ -445,7 +445,7 @@ class Document {
             $v_output = Utils::validateOutput($responseStream);
 
             if ($v_output === '') {
-                $output = $outputPath . Utils::getFileName($this->fileName) . '_' . $slideNumber . '.' . $saveFormat;
+                $output = $outputPath . Utils::getFileName($this->fileName) . '.' . $saveFormat;
                 Utils::saveFile($responseStream, $output);
                 return $output;
             }
