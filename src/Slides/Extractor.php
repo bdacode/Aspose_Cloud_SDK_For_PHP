@@ -17,6 +17,38 @@ class Extractor {
     }
 
     /*
+     * Gets comments from a slide
+     */
+    public function getComments($slideNo='',$storageName = '', $folder = '') {
+        try {
+            //check whether file is set or not
+            if ($this->fileName == '' || $slideNo == '')
+                throw new Exception('Missing required parameters.');
+
+            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNo . '/comments';
+            if ($folder != '') {
+                $strURI .= '?folder=' . $folder;
+            }
+            if ($storageName != '') {
+                $strURI .= '&storage=' . $storageName;
+            }
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+            $json = json_decode($responseStream);
+
+            if($json->Status == 'OK')
+                return $json->SlideComments;
+            else
+                return false;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
      * Gets total number of images in a presentation
      */
     public function getImageCount($storageName = '', $folder = '') {
