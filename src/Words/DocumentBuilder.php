@@ -11,6 +11,43 @@ use Aspose\Cloud\Storage\Folder;
 use Aspose\Cloud\Exception\AsposeCloudException as Exception;
 
 class DocumentBuilder {
+
+
+    /*
+     * Remove watermark from document
+     */
+    public function removeWatermark($fileName) {
+        try {
+            //check whether files are set or not
+            if ($fileName == '')
+                throw new Exception('File not specified');
+
+            //build URI to insert watermark image
+            $strURI = Product::$baseProductUri . '/words/' . $fileName .
+                '/watermark';
+
+            //sign URI
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+
+            $v_output = Utils::validateOutput($responseStream);
+
+            if ($v_output === '') {
+                //Save doc on server
+                $folder = new Folder();
+                $outputStream = $folder->GetFile($fileName);
+                $outputPath = AsposeApp::$outPutLocation . $fileName;
+                Utils::saveFile($outputStream, $outputPath);
+                return $outputPath;
+            }
+            else
+                return $v_output;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     /*
      * Inserts water mark text into the document.
      * @param string $fileName 
@@ -28,7 +65,7 @@ class DocumentBuilder {
             $json = json_encode($fieldsArray);
 
             //build URI to insert watermark text
-            $strURI = Product::$baseProductUri . '/words/' . $fileName . '/insertWatermarkText';
+            $strURI = Product::$baseProductUri . '/words/' . $fileName . '/watermark/insertText';
 
             //sign URI
             $signedURI = Utils::sign($strURI);
@@ -66,7 +103,7 @@ class DocumentBuilder {
 
             //build URI to insert watermark image
             $strURI = Product::$baseProductUri . '/words/' . $fileName .
-                    '/insertWatermarkImage?imageFile=' . $imageFile . '&rotationAngle=' . $rotationAngle;
+                    '/watermark/insertImage?imageFile=' . $imageFile . '&rotationAngle=' . $rotationAngle;
 
             //sign URI
             $signedURI = Utils::sign($strURI);

@@ -19,6 +19,194 @@ class Document {
     }
 
     /*
+     * Update all document fields
+     */
+    public function updateFields() {
+        try {
+            //check whether files are set or not
+            if ($this->fileName == '')
+                throw new Exception('Base file not specified');
+
+
+            //build URI to merge Docs
+            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/updateFields';
+
+            //sign URI
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+            $json = json_decode($responseStream);
+
+
+            if ($json->Code == 200)
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+     * Reject all tracking changes
+     */
+    public function rejectTrackingChanges() {
+        try {
+            //check whether files are set or not
+            if ($this->fileName == '')
+                throw new Exception('Base file not specified');
+
+
+            //build URI to merge Docs
+            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/rejectAll';
+
+            //sign URI
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+            $json = json_decode($responseStream);
+
+
+            if ($json->Code == 200)
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+     * Accept all tracking changes
+     */
+    public function acceptTrackingChanges() {
+        try {
+            //check whether files are set or not
+            if ($this->fileName == '')
+                throw new Exception('Base file not specified');
+
+
+            //build URI to merge Docs
+            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/acceptAll';
+
+            //sign URI
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+            $json = json_decode($responseStream);
+
+
+            if ($json->Code == 200)
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+     * Get Document's stats
+     */
+    public function getStats() {
+        try {
+            //check whether files are set or not
+            if ($this->fileName == '')
+                throw new Exception('Base file not specified');
+
+
+            //build URI to merge Docs
+            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/statistics';
+
+            //sign URI
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+            $json = json_decode($responseStream);
+
+
+            if ($json->Code == 200)
+                return $json->StatData;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @param string $from
+     * @param string $to
+     * @param string $format
+     * @param string $storageName
+     * @param string $folder
+     * @return bool
+     * @throws \Aspose\Cloud\Exception\AsposeCloudException
+     */
+
+    public function splitDocument($from='',$to='',$format='pdf',$storageName = '', $folder = '') {
+        try {
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+
+            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/split?';
+
+            if ($folder != '') {
+                $strURI .= '&folder=' . $folder;
+            }
+
+            if ($storageName != '') {
+                $strURI .= '&storage=' . $storageName;
+            }
+
+            if ($from != '') {
+                $strURI .= '&from=' . $from;
+            }
+
+            if ($to != '') {
+                $strURI .= '&to=' . $to;
+            }
+
+            if ($format != '') {
+                $strURI .= '&format=' . $format;
+            }
+
+            $strURI = rtrim($strURI,'?');
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+            $json = json_decode($responseStream);
+
+            if ($json->Code == 200) {
+                foreach ($json->SplitResult->Pages as $splitPage) {
+                    $splitFileName = basename($splitPage->Href);
+
+                    //build URI to download split slides
+                    $strURI = Product::$baseProductUri . '/storage/file/' . $splitFileName;
+                    //sign URI
+                    $signedURI = Utils::Sign($strURI);
+                    $responseStream = Utils::processCommand($signedURI, "GET", "", "");
+                    //save split slides
+                    $outputFile = AsposeApp::$outPutLocation . $splitFileName;
+                    Utils::saveFile($responseStream, $outputFile);
+                }
+            }
+            else
+                return false;
+
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+
+
+    /*
      * Appends a list of documents to this one.
      * @param string $appendDocs (List of documents to append)
      * @param string $importFormatModes
