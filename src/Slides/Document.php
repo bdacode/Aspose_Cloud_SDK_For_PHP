@@ -19,7 +19,7 @@ class Document {
         $this->fileName = $fileName;
     }
 
-    public function changeSliePosition($old_position='', $new_position='',$storageName = '', $folder = '') {
+    public function changeSlidePosition($old_position='', $new_position='',$storageName = '', $folder = '') {
         try {
             if ($this->fileName == '')
                 throw new Exception('No file name specified');
