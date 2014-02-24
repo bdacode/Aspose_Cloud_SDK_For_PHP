@@ -186,6 +186,43 @@ class TextEditor {
 
     /*
      * Replaces all instances of old text with new text in a PDF file or a particular page
+     * @param Array $fieldsArray
+     */
+    public function replaceMultipleText($fieldsArray) {
+        try {
+            //check whether file is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+
+            //Build JSON to post
+            $json = json_encode($fieldsArray);
+
+            //Build URI to replace text
+            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/replaceTextList';
+
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
+
+            $v_output = Utils::validateOutput($responseStream);
+
+            if ($v_output === '') {
+                //Save doc on server
+                $folder = new Folder();
+                $outputStream = $folder->GetFile($this->fileName);
+                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+                Utils::saveFile($outputStream, $outputPath);
+                return $outputPath;
+            }
+            else
+                return $v_output;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+     * Replaces all instances of old text with new text in a PDF file or a particular page
      * @param string $oldText
      * @param string $newText
      */
