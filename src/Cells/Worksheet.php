@@ -325,6 +325,36 @@ class Worksheet {
         }
     }
 
+    /*
+     * Delete a specific hyperlink from the sheet
+     * $index
+     */
+    public function deleteHyperlinkByIndex($index) {
+        try {
+            //check whether file is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //check whether workshett name is set or not
+            if ($this->worksheetName == '')
+                throw new Exception('Worksheet name not specified');
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName .
+                '/worksheets/' . $this->worksheetName . '/hyperlinks/' . $index;
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+            $json = json_decode($responseStream);
+            if($json->Status == 'OK')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function getComment($cellName) {
         try {
             //check whether file is set or not
