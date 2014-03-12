@@ -183,11 +183,15 @@ class Utils {
         $UrlToSign = rtrim($UrlToSign,"/");
         $url = parse_url($UrlToSign);
 
-        $urlPartToSign = $url['scheme'] . '://' . $url['host'] . str_replace('+','%2B',$url['path']) . '?appSID=' . AsposeApp::$appSID;
+        $urlPartToSign = $url['scheme'] . '://' . $url['host'] . str_replace(array(' ','+'),array('%20','%2B'),$url['path']);
 
         if(isset($url['query']) && !empty($url['query']))
         {
-            $urlPartToSign .= "&" . $url['query'];
+            $urlPartToSign .= "?" . str_replace(array(' ','+'),array('%20','%2B'),$url['query']) . '&appSID=' . AsposeApp::$appSID;
+        }
+        else
+        {
+            $urlPartToSign .= '?appSID=' . AsposeApp::$appSID;
         }
 
         // Create a signature using the private key and the URL-encoded
