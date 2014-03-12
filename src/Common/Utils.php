@@ -111,7 +111,7 @@ class Utils {
             curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($session);
         $header = curl_getinfo($session);
-        if ($header['http_code'] != 200) {
+        if ($header['http_code'] != 200 && $header['http_code'] != 201) {
             throw new Exception('Error Code: ' . $header['http_code'] . ', ' . Utils::$http_codes[$header['http_code']]);
         } else {
             if (preg_match('/You have processed/i', $result) || preg_match('/Your pricing plan allows only/i', $result)) {
@@ -177,29 +177,33 @@ class Utils {
         return base64_decode(str_replace(array('-', '_'), array('+', '/'), $value));
     }
 
+
     public static function sign($UrlToSign) {
         // parse the url
+        $UrlToSign = rtrim($UrlToSign,"/");
         $url = parse_url($UrlToSign);
 
-        if (isset($url['query']) == '')
-            $urlPartToSign = $url['path'] . '?appSID=' . AsposeApp::$appSID;
-        else
-            $urlPartToSign = $url['path'] . '?' . str_replace(' ', '%20', $url['query']) . '&appSID=' . AsposeApp::$appSID;
+        $urlPartToSign = $url['scheme'] . '://' . $url['host'] . str_replace('+','%2B',$url['path']) . '?appSID=' . AsposeApp::$appSID;
 
-        // Decode the private key into its binary format
-        $decodedKey = self::decodeBase64UrlSafe(AsposeApp::$appKey);
+        if(isset($url['query']) && !empty($url['query']))
+        {
+            $urlPartToSign .= "&" . $url['query'];
+        }
 
         // Create a signature using the private key and the URL-encoded
         // string using HMAC SHA1. This signature will be binary.
-        $signature = hash_hmac('sha1', $urlPartToSign, $decodedKey, true);
+        $signature = hash_hmac('sha1', $urlPartToSign, AsposeApp::$appKey, true);
 
         $encodedSignature = self::encodeBase64UrlSafe($signature);
+        $encodedSignature = str_replace(array('=','-','_'),array('','%2b','%2f'),$encodedSignature);
 
-        // return $UrlToSign . '?appSID=' . $this->appSID . '&signature=' . $encodedSignature;
-        if (isset($url['query']) == '')
-            return $url['scheme'] . '://' . $url['host'] . str_replace(' ', '%20', $url['path']) . '?appSID=' . AsposeApp::$appSID . '&signature=' . $encodedSignature;
-        else
-            return $url['scheme'] . '://' . $url['host'] . str_replace(' ', '%20', $url['path']) . '?' . str_replace(' ', '%20', $url['query']) . '&appSID=' . AsposeApp::$appSID . '&signature=' . $encodedSignature;
+        preg_match_all("/%[0-9a-f]{2}/",$encodedSignature,$m);
+        foreach($m[0] as $code)
+        {
+            $encodedSignature = str_replace($code,strtoupper($code),$encodedSignature);
+        }
+
+        return $urlPartToSign . '&signature=' . $encodedSignature;
     }
 
     /**
