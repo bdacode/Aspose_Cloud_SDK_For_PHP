@@ -393,6 +393,50 @@ class Worksheet {
         }
     }
 
+    public function deleteOleObjectByIndex($index) {
+        try {
+            //check whether file is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //check whether workshett name is set or not
+            if ($this->worksheetName == '')
+                throw new Exception('Worksheet name not specified');
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName .
+                '/worksheets/' . $this->worksheetName . '/oleobjects/' . $index;
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+            $json = json_decode($responseStream);
+            if($json->Code == 200)
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function deleteAllOleObject() {
+        try {
+            //check whether file is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //check whether workshett name is set or not
+            if ($this->worksheetName == '')
+                throw new Exception('Worksheet name not specified');
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName .
+                '/worksheets/' . $this->worksheetName . '/oleobjects';
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+            $json = json_decode($responseStream);
+            if($json->Code == 200)
+                return true;
+            else
+                return false;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     public function getPictureByIndex($index) {
         try {
             //check whether file is set or not
@@ -1178,6 +1222,128 @@ class Worksheet {
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
+        }
+    }
+
+    public function addOleObject($oleFile='', $imageFile='', $upperLeftRow = 0, $upperLeftColumn = 0, $height = 0, $width = 0) {
+        try {
+            if ($this->fileName == '') {
+                throw new Exception('No File Name Specified');
+            }
+            if ($this->worksheetName == '') {
+                throw new Exception('No Worksheet Specified');
+            }
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $this->worksheetName . '/oleobjects?upperLeftRow=' .
+                $upperLeftRow . '&upperLeftColumn=' . $upperLeftColumn .
+                '&height=' . $height . '&width=' . $width .
+                '&oleFile=' . $oleFile . '&imageFile='.$imageFile;
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'PUT');
+            $json = json_decode($responseStream);
+            if ($json->Code == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
+	 * Update a specific object from on specific sheet
+	 * @param $objectIndex
+	 */
+
+    public function updateOleObject($objectIndex,$object_data) {
+        try {
+            //check whether file and sheet is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //Build URI
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $this->worksheetName . '/oleobjects/' . $objectIndex;
+            //Sign URI
+            $signedURI = Utils::sign($strURI);
+            //Send request and receive response stream
+            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $object_data);
+            $json = json_decode($responseStream);
+            return $json;
+        } catch (Exception $e) {
+            throw new Exception($e -> getMessage());
+        }
+    }
+
+    /*
+	 * Update a specific picture from on specific sheet
+	 * @param $pictureIndex
+	 */
+    public function updatePicture($pictureIndex,$picture_data) {
+        try {
+            //check whether file and sheet is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //Build URI
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $this->worksheetName . '/pictures/' . $pictureIndex;
+            //Sign URI
+            $signedURI = Utils::sign($strURI);
+            //Send request and receive response stream
+            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $picture_data);
+            $json = json_decode($responseStream);
+            return $json;
+        } catch (Exception $e) {
+            throw new Exception($e -> getMessage());
+        }
+    }
+
+    /*
+	 * Delete a specific picture from a specific sheet
+	 * @param $pictureIndex
+	 */
+    public function deletePicture($pictureIndex) {
+        try {
+            //check whether file and sheet is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //Build URI
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $this->worksheetName . '/pictures/' . $pictureIndex;
+            //Sign URI
+            $signedURI = Utils::sign($strURI);
+            //Send request and receive response stream
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+            $json = json_decode($responseStream);
+            if ($json->Code == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e -> getMessage());
+        }
+    }
+
+    /*
+	 * Delete all pictures from a specific sheet
+	 */
+    public function deleteAllPictures() {
+        try {
+            //check whether file and sheet is set or not
+            if ($this->fileName == '')
+                throw new Exception('No file name specified');
+            //Build URI
+            $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $this->worksheetName . '/pictures';
+            //Sign URI
+            $signedURI = Utils::sign($strURI);
+            //Send request and receive response stream
+            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+            $json = json_decode($responseStream);
+            if ($json->Code == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e -> getMessage());
         }
     }
 
