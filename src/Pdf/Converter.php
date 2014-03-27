@@ -85,6 +85,40 @@ class Converter {
     }
 
     /*
+     * convert a document by url to SaveFormat
+     */
+    public function convertByUrl($url='',$format='',$outputFilename='') {
+        try {
+            //check whether file is set or not
+            if ($url == '')
+                throw new Exception('Url not specified');
+
+            $strURI = Product::$baseProductUri . '/pdf/convert?url='.$url.'&format='.$format;
+
+            $signedURI = Utils::sign($strURI);
+
+            $responseStream = Utils::processCommand($signedURI, 'PUT', '', '');
+
+            $v_output = Utils::validateOutput($responseStream);
+
+            if ($v_output === '') {
+                if ($this->saveFormat == 'html') {
+                    $saveFormat = 'zip';
+                } else {
+                    $saveFormat = $this->saveFormat;
+                }
+
+                $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($outputFilename) . '.' . $format);
+                return $outputPath;
+            } else {
+                return $v_output;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /*
      * convert a document to SaveFormat
      */
     public function convert() {
