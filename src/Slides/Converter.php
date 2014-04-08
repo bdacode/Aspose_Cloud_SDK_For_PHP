@@ -27,26 +27,22 @@ class Converter {
      * @param string $imageFormat
      */
     public function convertToImage($slideNumber, $imageFormat) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '?format=' . $imageFormat;
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '?format=' . $imageFormat;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output == '') {
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            } else {
-                return $v_output;
-            }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output == '') {
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
 
@@ -58,26 +54,22 @@ class Converter {
      * @param string $height
      */
     public function convertToImagebySize($slideNumber, $imageFormat, $width, $height) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '?format=' . $imageFormat . '&width=' . $width . '&height=' . $height;
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '?format=' . $imageFormat . '&width=' . $width . '&height=' . $height;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output == '') {
-                $outputPath = AsposeApp::$outPutLocation . 'output.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            } else {
-                return $v_output;
-            }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output == '') {
+            $outputPath = AsposeApp::$outPutLocation . 'output.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
 
@@ -85,33 +77,28 @@ class Converter {
      * convert a document to SaveFormat
      */
     public function convert() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '?format=' . $this->saveFormat;
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '?format=' . $this->saveFormat;
 
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            
-            $v_output = Utils::validateOutput($responseStream);
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            if ($v_output === '') {
-                if ($this->saveFormat == 'html') {
-                    $save_format = 'zip';
-                } else {
-                    $save_format = $this->saveFormat;
-                }
-                $outputPath =  AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $save_format;
-                Utils::saveFile($responseStream,$outputPath);
-                return $outputPath;
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            if ($this->saveFormat == 'html') {
+                $save_format = 'zip';
             } else {
-                return $v_output;
+                $save_format = $this->saveFormat;
             }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            $outputPath =  AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $save_format;
+            Utils::saveFile($responseStream,$outputPath);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
-
 }

@@ -21,62 +21,49 @@ class Image {
     }
 
     public function convertTiffToFax(){
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/imaging/tiff/' . $this->fileName . '/toFax';
 
-            $strURI = Product::$baseProductUri . '/imaging/tiff/' . $this->fileName . '/toFax';
+        $signedURI = Utils::sign($strURI);
 
-            $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $v_output = Utils::validateOutput($responseStream);
 
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
         }
-
+        else
+            return $v_output;
     }
 
     public function appendTiff($appendFile=""){
+        //check whether file is set or not
+        if ($this->fileName == '' || $appendFile == '')
+            throw new Exception('No file name specified');
 
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '' || $appendFile == '')
-                throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/imaging/tiff/' . $this->fileName . '/appendTiff?appendFile=' . $appendFile;
 
-            $strURI = Product::$baseProductUri . '/imaging/tiff/' . $this->fileName . '/appendTiff?appendFile=' . $appendFile;
+        $signedURI = Utils::sign($strURI);
 
-            $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $json = json_decode($responseStream);
 
-            $json = json_decode($responseStream);
-
-            if ($json->Status == 'OK') {
-                $folder = new Folder();
-                $outputStream = $folder->getFile($this->fileName);
-                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            } else {
-                return false;
-            }
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($json->Status == 'OK') {
+            $folder = new Folder();
+            $outputStream = $folder->getFile($this->fileName);
+            $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
+        } else {
+            return false;
         }
-
     }
 
 } 

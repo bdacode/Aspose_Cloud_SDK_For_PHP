@@ -25,65 +25,56 @@ class Converter {
      * convert a document to SaveFormat
      */
     public function convert() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //build URI
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '?format=' . $this->saveFormat;
+        //build URI
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '?format=' . $this->saveFormat;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                if ($this->saveFormat == 'html') {
-                    $save_format = 'zip';
-                } else {
-                    $save_format = $this->saveFormat;
-                }
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $save_format;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
+        if ($v_output === '') {
+            if ($this->saveFormat == 'html') {
+                $save_format = 'zip';
             } else {
-                return $v_output;
+                $save_format = $this->saveFormat;
             }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $save_format;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
 
     public function convertLocalFile($inputPath, $outputPath, $outputFormat) {
-        try {
-            $str_uri = Product::$baseProductUri . '/words/convert?format=' . $outputFormat;
-            $signed_uri = Utils::sign($str_uri);
-            $responseStream = Utils::uploadFileBinary($signed_uri, $inputPath, 'xml');
+        $str_uri = Product::$baseProductUri . '/words/convert?format=' . $outputFormat;
+        $signed_uri = Utils::sign($str_uri);
+        $responseStream = Utils::uploadFileBinary($signed_uri, $inputPath, 'xml');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                if ($outputFormat == 'html') {
-                    $saveFormat = 'zip';
-                } else {
-                    $saveFormat = $outputFormat;
-                }
-
-                if ($outputPath == '') {
-                    $outputFilename = Utils::getFileName($inputPath) . '.' . $saveFormat;
-                }
-
-                Utils::saveFile($responseStream, AsposeApp::$outPutLocation . $outputFilename);
-                return $outputFilename;
+        if ($v_output === '') {
+            if ($outputFormat == 'html') {
+                $saveFormat = 'zip';
+            } else {
+                $saveFormat = $outputFormat;
             }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-    }
 
+            if ($outputPath == '') {
+                $outputFilename = Utils::getFileName($inputPath) . '.' . $saveFormat;
+            }
+
+            Utils::saveFile($responseStream, AsposeApp::$outPutLocation . $outputFilename);
+            return $outputFilename;
+        }
+        else
+            return $v_output;
+    }
 }

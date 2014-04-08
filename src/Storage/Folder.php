@@ -29,22 +29,18 @@ class Folder {
      * @param string $strFolder
      */
     public function uploadFile($strFile, $strFolder, $storageName = '') {
-        try {
-            $strRemoteFileName = basename($strFile);
-            $strURIRequest = $this->strURIFile;
-            if ($strFolder == '')
-                $strURIRequest .= $strRemoteFileName;
-            else
-                $strURIRequest .= $strFolder . '/' . $strRemoteFileName;
-            if ($storageName != '') {
-                $strURIRequest .= '?storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURIRequest);
-
-            Utils::uploadFileBinary($signedURI, $strFile);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strRemoteFileName = basename($strFile);
+        $strURIRequest = $this->strURIFile;
+        if ($strFolder == '')
+            $strURIRequest .= $strRemoteFileName;
+        else
+            $strURIRequest .= $strFolder . '/' . $strRemoteFileName;
+        if ($storageName != '') {
+            $strURIRequest .= '?storage=' . $storageName;
         }
+        $signedURI = Utils::sign($strURIRequest);
+
+        Utils::uploadFileBinary($signedURI, $strFile);
     }
 
     /*
@@ -53,27 +49,23 @@ class Folder {
      * @param string $fileName
      */
     public function fileExists($fileName, $storageName = '') {
-        try {
-            //check whether file is set or not
-            if ($fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($fileName == '')
+            throw new Exception('No file name specified');
 
-            //build URI
-            $strURI = $this->strURIExist . $fileName;
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = json_decode(Utils::processCommand($signedURI, 'GET', '', ''));
-            if (!$responseStream->FileExist->IsExist) {
-                return FALSE;
-            }
-            return TRUE;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //build URI
+        $strURI = $this->strURIExist . $fileName;
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = json_decode(Utils::processCommand($signedURI, 'GET', '', ''));
+        if (!$responseStream->FileExist->IsExist) {
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /*
@@ -82,26 +74,22 @@ class Folder {
      * @param string $fileName
      */
     public function deleteFile($fileName, $storageName = '') {
-        try {
-            //check whether file is set or not
-            //build URI
-            if ($fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = $this->strURIFile . $fileName;
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = json_decode(Utils::processCommand($signedURI, 'DELETE', '', ''));
-            if ($responseStream->Code != 200) {
-                return FALSE;
-            }
-            return TRUE;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether file is set or not
+        //build URI
+        if ($fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = $this->strURIFile . $fileName;
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = json_decode(Utils::processCommand($signedURI, 'DELETE', '', ''));
+        if ($responseStream->Code != 200) {
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /*
@@ -110,24 +98,20 @@ class Folder {
      * @param string $strFolder
      */
     public function createFolder($strFolder, $storageName = '') {
-        try {
-            //build URI
-            $strURIRequest = $this->strURIFolder . $strFolder;
-            if ($storageName != '') {
-                $strURIRequest .= '?storage=' . $storageName;
-            }
-            //sign URI
-            $signedURI = Utils::sign($strURIRequest);
-
-            $responseStream = json_decode(Utils::processCommand($signedURI, 'PUT', '', ''));
-
-            if ($responseStream->Code != 200) {
-                return FALSE;
-            }
-            return TRUE;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //build URI
+        $strURIRequest = $this->strURIFolder . $strFolder;
+        if ($storageName != '') {
+            $strURIRequest .= '?storage=' . $storageName;
         }
+        //sign URI
+        $signedURI = Utils::sign($strURIRequest);
+
+        $responseStream = json_decode(Utils::processCommand($signedURI, 'PUT', '', ''));
+
+        if ($responseStream->Code != 200) {
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /*
@@ -136,32 +120,27 @@ class Folder {
      * @param string $folderName
      */
     public function deleteFolder($folderName) {
-        try {
-            //check whether folder is set or not
-            if ($folderName == '')
-                throw new Exception('No folder name specified');
+        //check whether folder is set or not
+        if ($folderName == '')
+            throw new Exception('No folder name specified');
 
-            //build URI
-            $strURI = $this->strURIFolder . $folderName;
+        //build URI
+        $strURI = $this->strURIFolder . $folderName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = json_decode(Utils::processCommand($signedURI, 'DELETE', '', ''));
-            if ($responseStream->Code != 200) {
-                return FALSE;
-            }
-            return TRUE;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $responseStream = json_decode(Utils::processCommand($signedURI, 'DELETE', '', ''));
+        if ($responseStream->Code != 200) {
+            return FALSE;
         }
+        return TRUE;
     }
 
     /*
      * Provides the total / free disc size in bytes for your app
      */
     public function getDiscUsage($storageName = '') {
-        try {
             //build URI
             $strURI = $this->strURIDisc;
             if ($storageName != '') {
@@ -173,9 +152,6 @@ class Folder {
             $responseStream = json_decode(Utils::processCommand($signedURI, 'GET', '', ''));
 
             return $responseStream->DiscUsage;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
     }
 
     /*
@@ -184,25 +160,21 @@ class Folder {
      * @param string $fileName
      */
     public function getFile($fileName, $storageName = '') {
-        try {
-            //check whether file is set or not
-            if ($fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($fileName == '')
+            throw new Exception('No file name specified');
 
-            //build URI
-            $strURI = $this->strURIFile . $fileName;
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            return $responseStream;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //build URI
+        $strURI = $this->strURIFile . $fileName;
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        return $responseStream;
     }
 
     /*
@@ -211,28 +183,24 @@ class Folder {
      * @param string $strFolder
      */
     public function getFilesList($strFolder, $storageName = '') {
-        try {
-            //build URI
-            $strURI = $this->strURIFolder;
-            //check whether file is set or not
-            if (!$strFolder == '') {
-                $strURI .= $strFolder;
-            }
-            if ($storageName != '') {
-                $strURI .='?storage=' . $storageName;
-            }
-
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return $json->Files;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //build URI
+        $strURI = $this->strURIFolder;
+        //check whether file is set or not
+        if (!$strFolder == '') {
+            $strURI .= $strFolder;
         }
+        if ($storageName != '') {
+            $strURI .='?storage=' . $storageName;
+        }
+
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return $json->Files;
     }
 
 }

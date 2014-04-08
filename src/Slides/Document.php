@@ -20,260 +20,226 @@ class Document {
     }
 
     public function changeSlidePosition($old_position='', $new_position='',$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if ($old_position == '' || $new_position == '')
-                throw new Exception('Missing Required Params');
-
-
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?OldPosition=' . $old_position . '&NewPosition=' . $new_position;
-            if ($folder != '') {
-                $strURI .= 'folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
-            $json = json_decode($responseStream);
+        if ($old_position == '' || $new_position == '')
+            throw new Exception('Missing Required Params');
 
 
-            if ($json->Code == 200)
-                return $json->Slides;
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?OldPosition=' . $old_position . '&NewPosition=' . $new_position;
+        if ($folder != '') {
+            $strURI .= 'folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $json = json_decode($responseStream);
+
+
+        if ($json->Code == 200)
+            return $json->Slides;
+        else
+            return false;
     }
 
     public function cloneSlide($slideno='',$position='',$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if ($position == '' )
-                throw new Exception('Position not speciefied.');
+        if ($position == '' )
+            throw new Exception('Position not speciefied.');
 
-            if ($slideno == '' )
-                throw new Exception('Slide not speciefied.');
+        if ($slideno == '' )
+            throw new Exception('Slide not speciefied.');
 
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?SlideToClone=' . $slideno . '&Position=' . $position;
-            if ($folder != '') {
-                $strURI .= 'folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
-            $json = json_decode($responseStream);
-
-            if ($json->Code == 200)
-                return $json->Slides;
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?SlideToClone=' . $slideno . '&Position=' . $position;
+        if ($folder != '') {
+            $strURI .= 'folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 200)
+            return $json->Slides;
+        else
+            return false;
     }
 
     public function addSlide($position='',$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if ($position == '' )
-                throw new Exception('Position not speciefied.');
+        if ($position == '' )
+            throw new Exception('Position not speciefied.');
 
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?Position=' . $position;
-            if ($folder != '') {
-                $strURI .= 'folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
-            $json = json_decode($responseStream);
-
-            if ($json->Code == 200)
-                return $json->Slides;
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides?Position=' . $position;
+        if ($folder != '') {
+            $strURI .= 'folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 200)
+            return $json->Slides;
+        else
+            return false;
     }
 
     public function splitPresentation($from='',$to='',$destination='',$format='',$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/split?';
-            if ($folder != '') {
-                $strURI .= '&folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-
-            if ($from != '') {
-                $strURI .= '&from=' . $from;
-            }
-
-            if ($to != '') {
-                $strURI .= '&to=' . $to;
-            }
-
-            if ($destination != '') {
-                $strURI .= '&destFolder=' . $destination;
-            }
-
-            if ($format != '') {
-                $strURI .= '&format=' . $format;
-            }
-
-            $strURI = rtrim($strURI,'?');
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
-
-            $json = json_decode($responseStream);
-
-
-
-            if ($json->Code == 200) {
-                foreach ($json->SplitResult->Slides as $splitPage) {
-                    $splitFileName = basename($splitPage->Href);
-
-                    //build URI to download split slides
-                    $strURI = Product::$baseProductUri . '/storage/file/' . $splitFileName;
-                    //sign URI
-                    $signedURI = Utils::Sign($strURI);
-                    $responseStream = Utils::processCommand($signedURI, "GET", "", "");
-                    //save split slides
-                    $outputFile = AsposeApp::$outPutLocation . $splitFileName;
-                    Utils::saveFile($responseStream, $outputFile);
-                }
-            }
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/split?';
+        if ($folder != '') {
+            $strURI .= '&folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+
+        if ($from != '') {
+            $strURI .= '&from=' . $from;
+        }
+
+        if ($to != '') {
+            $strURI .= '&to=' . $to;
+        }
+
+        if ($destination != '') {
+            $strURI .= '&destFolder=' . $destination;
+        }
+
+        if ($format != '') {
+            $strURI .= '&format=' . $format;
+        }
+
+        $strURI = rtrim($strURI,'?');
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+        $json = json_decode($responseStream);
+
+
+
+        if ($json->Code == 200) {
+            foreach ($json->SplitResult->Slides as $splitPage) {
+                $splitFileName = basename($splitPage->Href);
+
+                //build URI to download split slides
+                $strURI = Product::$baseProductUri . '/storage/file/' . $splitFileName;
+                //sign URI
+                $signedURI = Utils::Sign($strURI);
+                $responseStream = Utils::processCommand($signedURI, "GET", "", "");
+                //save split slides
+                $outputFile = AsposeApp::$outPutLocation . $splitFileName;
+                Utils::saveFile($responseStream, $outputFile);
+            }
+        }
+        else
+            return false;
     }
 
     public function mergePresentations($presentationsList=array(),$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if (!is_array($presentationsList) || empty($presentationsList) )
-                throw new Exception('Presentation list not speciefied');
+        if (!is_array($presentationsList) || empty($presentationsList) )
+            throw new Exception('Presentation list not speciefied');
 
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/merge';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $json_data = json_encode($presentationsList);
-
-            $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $json_data);
-
-            $json = json_decode($responseStream);
-
-            if ($json->Code == 200)
-                return $json->Document;
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/merge';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $json_data = json_encode($presentationsList);
+
+        $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $json_data);
+
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 200)
+            return $json->Document;
+        else
+            return false;
     }
     
     public function createEmptyPresentation($storageName = '', $folder = ''){
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get a list of slides
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName;
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'PUT', '', '');
-
-            $json = json_decode($responseStream);
-
-            if ($json->Code == 201)
-                return $json->Document;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to get a list of slides
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName;
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
 
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'PUT', '', '');
+
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 201)
+            return $json->Document;
+        else
+            return false;
     }
 
     /*
      * Finds the slide count of the specified PowerPoint document
      */
     public function getSlideCount($storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get a list of slides
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return count($json->Slides->SlideList);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to get a list of slides
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return count($json->Slides->SlideList);
     }
 
     /*
@@ -295,34 +261,31 @@ class Document {
         }
         else
             throw new Exception('Invalid number of arguments');
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
 
-            //Build URI to replace text
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . ((isset($parameters[2])) ? '/slides/' . $slideNumber : '') .
-                    '/replaceText?oldValue=' . $oldText . '&newValue=' . $newText . '&ignoreCase=true';
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $signedURI = Utils::sign($strURI);
+        //Build URI to replace text
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . ((isset($parameters[2])) ? '/slides/' . $slideNumber : '') .
+                '/replaceText?oldValue=' . $oldText . '&newValue=' . $newText . '&ignoreCase=true';
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $signedURI = Utils::sign($strURI);
 
-            $v_output = Utils::validateOutput($responseStream);
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            if ($v_output === '') {
-                //Save doc on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($this->fileName);
-                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            //Save doc on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($this->fileName);
+            $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -338,93 +301,81 @@ class Document {
         }
 
 
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get all text items
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName .
-                    ((isset($parameters[0])) ? '/slides/' . $slideNumber . '/textItems?withEmpty=' . $withEmpty : '/textItems');
+        //Build URI to get all text items
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName .
+                ((isset($parameters[0])) ? '/slides/' . $slideNumber . '/textItems?withEmpty=' . $withEmpty : '/textItems');
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            return $json->TextItems->Items;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return $json->TextItems->Items;
     }
 
     /*
      * Deletes all slides from a presentation
      */
     public function deleteAllSlides($storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to replace text
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
-
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                //Save doc on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($this->fileName);
-                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to replace text
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            //Save doc on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($this->fileName);
+            $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
+        }
+        else
+            return $v_output;
     }
 
     /*
      * Get Document's properties
      */
     public function getDocumentProperties() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return $json->DocumentProperties->List;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperties->List;
+        else
+            return false;
     }
 
     /*
@@ -432,64 +383,56 @@ class Document {
       @param string $propertyName
      */
     public function getDocumentProperty($propertyName) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/presentation/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/presentation/documentProperties/' . $propertyName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-            
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $json = json_decode($responseStream);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return $json->DocumentProperty;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperty;
+        else
+            return false;
     }
 
     /*
      * Remove All Document's properties
      */
     public function removeAllProperties() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'DELETE');
+        $responseStream = Utils::processCommand($signedURI, 'DELETE');
 
-            $json = json_decode($responseStream);
-            if (is_object($json)) {
-                if ($json->Code == 200)
-                    return true;
-                else
-                    return false;
-            }
-
-            return true;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $json = json_decode($responseStream);
+        if (is_object($json)) {
+            if ($json->Code == 200)
+                return true;
+            else
+                return false;
         }
+
+        return true;
     }
 
     /*
@@ -497,31 +440,27 @@ class Document {
       @param string $propertyName
      */
     public function deleteDocumentProperty($propertyName) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties/' . $propertyName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            if ($json->Code == 200)
-                return true;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return true;
+        else
+            return false;
     }
 
     /*
@@ -530,38 +469,34 @@ class Document {
       @param string $propertyValue
      */
     public function setProperty($propertyName, $propertyValue) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            if ($propertyValue == '')
-                throw new Exception('Property Value not specified');
+        if ($propertyValue == '')
+            throw new Exception('Property Value not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties/' . $propertyName;
 
-            $put_data_arr['Value'] = $propertyValue;
+        $put_data_arr['Value'] = $propertyValue;
 
-            $put_data = json_encode($put_data_arr);
+        $put_data = json_encode($put_data_arr);
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
+        $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            if ($json->Code == 200)
-                return $json->DocumentProperty;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperty;
+        else
+            return false;
     }
 
     /*
@@ -569,31 +504,27 @@ class Document {
       @param array $propertiesList
      */
     public function addCustomProperty($propertiesList) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertiesList == '')
-                throw new Exception('Properties not specified');
+        if ($propertiesList == '')
+            throw new Exception('Properties not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/documentProperties';
 
-            $put_data = json_encode($propertiesList);
+        $put_data = json_encode($propertiesList);
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
+        $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            return $json;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return $json;
     }
 
     /*
@@ -602,45 +533,41 @@ class Document {
      * @param string $saveFormat
      */
     public function saveAs($outputPath, $saveFormat,$jpegQuality='', $storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if ($outputPath == '')
-                throw new Exception('Output path not specified');
+        if ($outputPath == '')
+            throw new Exception('Output path not specified');
 
-            if ($saveFormat == '')
-                throw new Exception('Save format not specified');
-
+        if ($saveFormat == '')
+            throw new Exception('Save format not specified');
 
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '?format=' . $saveFormat;
-            if ($folder != '') {
-                $strURI .= '&folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            if ($jpegQuality != '') {
-                $strURI .= '&jpegQuality=' . $jpegQuality;
-            }
-            $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                $output =  $outputPath . Utils::getFileName($this->fileName) . '.' . $saveFormat;
-                Utils::saveFile($responseStream,$output);
-                return $output;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '?format=' . $saveFormat;
+        if ($folder != '') {
+            $strURI .= '&folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        if ($jpegQuality != '') {
+            $strURI .= '&jpegQuality=' . $jpegQuality;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            $output =  $outputPath . Utils::getFileName($this->fileName) . '.' . $saveFormat;
+            Utils::saveFile($responseStream,$output);
+            return $output;
+        }
+        else
+            return $v_output;
     }
 
     /*
@@ -650,40 +577,35 @@ class Document {
      * @param string $saveFormat
      */
     public function saveSlideAs($slideNumber, $outputPath, $saveFormat) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            if ($outputPath == '')
-                throw new Exception('Output path not specified');
+        if ($outputPath == '')
+            throw new Exception('Output path not specified');
 
-            if ($saveFormat == '')
-                throw new Exception('Save format not specified');
+        if ($saveFormat == '')
+            throw new Exception('Save format not specified');
 
-            if ($slideNumber == '')
-                throw new Exception('Slide number not specified');
-
+        if ($slideNumber == '')
+            throw new Exception('Slide number not specified');
 
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/'.$slideNumber.'?format=' . $saveFormat;
 
-            $signedURI = Utils::sign($strURI);
-            
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/'.$slideNumber.'?format=' . $saveFormat;
 
-            $v_output = Utils::validateOutput($responseStream);
+        $signedURI = Utils::sign($strURI);
 
-            if ($v_output === '') {
-                $output = $outputPath . Utils::getFileName($this->fileName) . '_' . $slideNumber . '.' . $saveFormat;
-                Utils::saveFile($responseStream, $output);
-                return $output;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            $output = $outputPath . Utils::getFileName($this->fileName) . '_' . $slideNumber . '.' . $saveFormat;
+            Utils::saveFile($responseStream, $output);
+            return $output;
         }
+        else
+            return $v_output;
     }
-
 }

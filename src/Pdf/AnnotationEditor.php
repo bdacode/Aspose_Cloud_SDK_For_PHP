@@ -22,18 +22,14 @@ class AnnotationEditor {
      * @param $pageNumber
      */
     public function getAnnotationsCount($pageNumber) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/annotations';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return count($json->Annotations->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/annotations';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return count($json->Annotations->List);
     }
 
     /*
@@ -42,18 +38,14 @@ class AnnotationEditor {
      * @param $annotationIndex
      */
     public function getAnnotation($pageNumber, $annotationIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/annotations/' . $annotationIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Annotation;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/annotations/' . $annotationIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Annotation;
     }
 
     /*
@@ -61,37 +53,29 @@ class AnnotationEditor {
      * @param $pageNumber
      */
     public function getAllAnnotations($pageNumber) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $iTotalAnnotation = $this->GetAnnotationsCount($pageNumber);
-            $listAnnotations = array();
-            for ($index = 1; $index <= $iTotalAnnotation; $index++) {
-                array_push($listAnnotations, $this->GetAnnotation($pageNumber, $index));
-            }
-            return $listAnnotations;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $iTotalAnnotation = $this->GetAnnotationsCount($pageNumber);
+        $listAnnotations = array();
+        for ($index = 1; $index <= $iTotalAnnotation; $index++) {
+            array_push($listAnnotations, $this->GetAnnotation($pageNumber, $index));
         }
+        return $listAnnotations;
     }
 
     /*
      * Gets total number of Bookmarks in a Pdf document
      */
     public function getBookmarksCount() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return count($json->Bookmarks->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return count($json->Bookmarks->List);
     }
 
     /*
@@ -99,18 +83,14 @@ class AnnotationEditor {
      * @param $parent
      */
     public function getChildBookmarksCount($parent) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $parent . '/bookmarks';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return count($json->Bookmarks->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $parent . '/bookmarks';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return count($json->Bookmarks->List);
     }
 
     /*
@@ -118,18 +98,14 @@ class AnnotationEditor {
      * @param $bookmarkIndex
      */
     public function getBookmark($bookmarkIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $bookmarkIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Bookmark;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $bookmarkIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Bookmark;
     }
 
     /*
@@ -138,18 +114,14 @@ class AnnotationEditor {
      * @param $childIndex
      */
     public function getChildBookmark($parentIndex, $childIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $parentIndex . '/bookmarks/' . $childIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Bookmark;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $parentIndex . '/bookmarks/' . $childIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Bookmark;
     }
 
     /*
@@ -157,57 +129,45 @@ class AnnotationEditor {
      * @param $bookmarkIndex
      */
     public function isChildBookmark($bookmarkIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            if ($bookmarkIndex === '')
-                throw new Exception('bookmark index not specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $bookmarkIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Bookmark;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        if ($bookmarkIndex === '')
+            throw new Exception('bookmark index not specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/bookmarks/' . $bookmarkIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Bookmark;
     }
 
     /*
      * Gets list of all the Bookmarks in a Pdf document
      */
     public function getAllBookmarks() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $iTotalBookmarks = $this->GetBookmarksCount();
-            $listBookmarks = array();
-            for ($index = 1; $index <= $iTotalBookmarks; $index++) {
-                array_push($listBookmarks, $this->GetBookmark($index));
-            }
-            return $listBookmarks;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $iTotalBookmarks = $this->GetBookmarksCount();
+        $listBookmarks = array();
+        for ($index = 1; $index <= $iTotalBookmarks; $index++) {
+            array_push($listBookmarks, $this->GetBookmark($index));
         }
+        return $listBookmarks;
     }
 
     /*
      * Gets number of attachments in the Pdf document
      */
     public function getAttachmentsCount() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return count($json->Attachments->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return count($json->Attachments->List);
     }
 
     /*
@@ -215,37 +175,29 @@ class AnnotationEditor {
      * @param $attachmentIndex
      */
     public function getAttachment($attachmentIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments/' . $attachmentIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Attachment;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments/' . $attachmentIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Attachment;
     }
 
     /*
      * Gets List of all the attachments in Pdf document
      */
     public function getAllAttachments() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $iTotalAttachments = $this->GetAttachmentsCount();
-            $listAttachments = array();
-            for ($index = 1; $index <= $iTotalAttachments; $index++) {
-                array_push($listAttachments, $this->GetAttachment($index));
-            }
-            return $listAttachments;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $iTotalAttachments = $this->GetAttachmentsCount();
+        $listAttachments = array();
+        for ($index = 1; $index <= $iTotalAttachments; $index++) {
+            array_push($listAttachments, $this->GetAttachment($index));
         }
+        return $listAttachments;
     }
 
     /*
@@ -253,26 +205,22 @@ class AnnotationEditor {
      * @param string $attachmentIndex
      */
     public function downloadAttachment($attachmentIndex) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('PDF file name not specified');
-            $fileInformation = $this->GetAttachment($attachmentIndex);
-            //build URI to download attachment
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments/' . $attachmentIndex . '/download';
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output === '') {
-                Utils::saveFile($responseStream, AsposeApp::$outPutLocation . $fileInformation->Name);
-                return '';
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('PDF file name not specified');
+        $fileInformation = $this->GetAttachment($attachmentIndex);
+        //build URI to download attachment
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/attachments/' . $attachmentIndex . '/download';
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            Utils::saveFile($responseStream, AsposeApp::$outPutLocation . $fileInformation->Name);
+            return '';
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -280,18 +228,14 @@ class AnnotationEditor {
      * @param $pageNumber
      */
     public function getLinksCount($pageNumber) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/links';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return count($json->Links->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/links';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return count($json->Links->List);
     }
 
     /*
@@ -300,18 +244,14 @@ class AnnotationEditor {
      * @param $linkIndex
      */
     public function getLink($pageNumber, $linkIndex) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/links/' . $linkIndex;
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $json = json_decode($responseStream);
-            return $json->Link;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/links/' . $linkIndex;
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $json = json_decode($responseStream);
+        return $json->Link;
     }
 
     /*
@@ -319,19 +259,14 @@ class AnnotationEditor {
      * @param $pageNumber
      */
     public function getAllLinks($pageNumber) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
-            $iTotalLinks = $this->GetLinksCount($pageNumber);
-            $listLinks = array();
-            for ($index = 1; $index <= $iTotalLinks; $index++) {
-                array_push($listLinks, $this->GetLink($pageNumber, $index));
-            }
-            return $listLinks;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        $iTotalLinks = $this->GetLinksCount($pageNumber);
+        $listLinks = array();
+        for ($index = 1; $index <= $iTotalLinks; $index++) {
+            array_push($listLinks, $this->GetLink($pageNumber, $index));
         }
+        return $listLinks;
     }
-
 }

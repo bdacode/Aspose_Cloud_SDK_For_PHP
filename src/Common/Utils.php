@@ -112,7 +112,7 @@ class Utils {
         $result = curl_exec($session);
         $header = curl_getinfo($session);
         if ($header['http_code'] != 200 && $header['http_code'] != 201) {
-            throw new Exception('Error Code: ' . $header['http_code'] . ', ' . Utils::$http_codes[$header['http_code']]);
+            throw new Exception($result);
         } else {
             if (preg_match('/You have processed/i', $result) || preg_match('/Your pricing plan allows only/i', $result)) {
                 throw new Exception($result);

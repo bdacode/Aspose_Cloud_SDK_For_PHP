@@ -22,23 +22,19 @@ class Extractor {
      * @param $pageNumber
      */
     public function getImageCount($pageNumber) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images';
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images';
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            return count($json->Images->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return count($json->Images->List);
     }
 
     /*
@@ -48,29 +44,25 @@ class Extractor {
      * @param string $imageFormat
      */
     public function getImageDefaultSize($pageNumber, $imageIndex, $imageFormat) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images/' . $imageIndex . '?format=' . $imageFormat;
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images/' . $imageIndex . '?format=' . $imageFormat;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $imageIndex . '.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $imageIndex . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -82,27 +74,23 @@ class Extractor {
      * @param int $imageHeight
      */
     public function getImageCustomSize($pageNumber, $imageIndex, $imageFormat, $imageWidth, $imageHeight) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images/' . $imageIndex . '?format=' . $imageFormat . '&width=' . $imageWidth . '&height=' . $imageHeight;
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '/images/' . $imageIndex . '?format=' . $imageFormat . '&width=' . $imageWidth . '&height=' . $imageHeight;
 
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-            $v_output = Utils::validateOutput($responseStream);
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $imageIndex . '.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $imageIndex . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
 }

@@ -22,120 +22,103 @@ class Document {
      * Update all document fields
      */
     public function updateFields() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/updateFields';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/updateFields';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-
-            if ($json->Code == 200)
-                return true;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return true;
+        else
+            return false;
     }
 
     /*
      * Reject all tracking changes
      */
     public function rejectTrackingChanges() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/rejectAll';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/rejectAll';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return true;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return true;
+        else
+            return false;
     }
 
     /*
      * Accept all tracking changes
      */
     public function acceptTrackingChanges() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/acceptAll';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/revisions/acceptAll';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return true;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return true;
+        else
+            return false;
     }
 
     /*
      * Get Document's stats
      */
     public function getStats() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/statistics';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/statistics';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return $json->StatData;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->StatData;
+        else
+            return false;
     }
 
     /**
@@ -149,59 +132,55 @@ class Document {
      */
 
     public function splitDocument($from='',$to='',$format='pdf',$storageName = '', $folder = '') {
-        try {
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/split?';
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/split?';
 
-            if ($folder != '') {
-                $strURI .= '&folder=' . $folder;
-            }
-
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-
-            if ($from != '') {
-                $strURI .= '&from=' . $from;
-            }
-
-            if ($to != '') {
-                $strURI .= '&to=' . $to;
-            }
-
-            if ($format != '') {
-                $strURI .= '&format=' . $format;
-            }
-
-            $strURI = rtrim($strURI,'?');
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
-
-            $json = json_decode($responseStream);
-
-            if ($json->Code == 200) {
-                foreach ($json->SplitResult->Pages as $splitPage) {
-                    $splitFileName = basename($splitPage->Href);
-
-                    //build URI to download split slides
-                    $strURI = Product::$baseProductUri . '/storage/file/' . $splitFileName;
-                    //sign URI
-                    $signedURI = Utils::Sign($strURI);
-                    $responseStream = Utils::processCommand($signedURI, "GET", "", "");
-                    //save split slides
-                    $outputFile = AsposeApp::$outPutLocation . $splitFileName;
-                    Utils::saveFile($responseStream, $outputFile);
-                }
-            }
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($folder != '') {
+            $strURI .= '&folder=' . $folder;
         }
+
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+
+        if ($from != '') {
+            $strURI .= '&from=' . $from;
+        }
+
+        if ($to != '') {
+            $strURI .= '&to=' . $to;
+        }
+
+        if ($format != '') {
+            $strURI .= '&format=' . $format;
+        }
+
+        $strURI = rtrim($strURI,'?');
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', '', '');
+
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 200) {
+            foreach ($json->SplitResult->Pages as $splitPage) {
+                $splitFileName = basename($splitPage->Href);
+
+                //build URI to download split slides
+                $strURI = Product::$baseProductUri . '/storage/file/' . $splitFileName;
+                //sign URI
+                $signedURI = Utils::Sign($strURI);
+                $responseStream = Utils::processCommand($signedURI, "GET", "", "");
+                //save split slides
+                $outputFile = AsposeApp::$outPutLocation . $splitFileName;
+                Utils::saveFile($responseStream, $outputFile);
+            }
+        }
+        else
+            return false;
+
     }
 
 
@@ -213,74 +192,66 @@ class Document {
      * @param string $sourceFolder (name of the folder where documents are present)
      */
     public function appendDocument($appendDocs, $importFormatModes, $sourceFolder) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
-            //check whether required information is complete
-            if (count($appendDocs) != count($importFormatModes))
-                throw new Exception('Please specify complete documents and import format modes');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
+        //check whether required information is complete
+        if (count($appendDocs) != count($importFormatModes))
+            throw new Exception('Please specify complete documents and import format modes');
 
-            $post_array = array();
-            $i = 0;
-            foreach ($appendDocs as $doc) {
-                $post_array[] = array("Href" => (($sourceFolder != "" ) ? $sourceFolder . "\\" . $doc : $doc), "ImportFormatMode" => $importFormatModes[$i]);
-                $i++;
-            }
-            $data = array("DocumentEntries" => $post_array);
-            $json = json_encode($data);
-
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/appendDocument';
-
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
-
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                //Save merged docs on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($sourceFolder . (($sourceFolder == '') ? '' : '/') . $this->fileName);
-                $outputPath = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $post_array = array();
+        $i = 0;
+        foreach ($appendDocs as $doc) {
+            $post_array[] = array("Href" => (($sourceFolder != "" ) ? $sourceFolder . "\\" . $doc : $doc), "ImportFormatMode" => $importFormatModes[$i]);
+            $i++;
         }
+        $data = array("DocumentEntries" => $post_array);
+        $json = json_encode($data);
+
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/appendDocument';
+
+        //sign URI
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            //Save merged docs on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($sourceFolder . (($sourceFolder == '') ? '' : '/') . $this->fileName);
+            $outputPath = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
+        }
+        else
+            return $v_output;
     }
 
     /*
      * Get Resource Properties information like document source format, IsEncrypted, IsSigned and document properties
      */
     public function getDocumentInfo() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            if ($json->Code == 200)
-                return $json->Document;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->Document;
+        else
+            return false;
     }
 
     /*
@@ -288,32 +259,28 @@ class Document {
       @param string $propertyName
      */
     public function getProperty($propertyName) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return $json->DocumentProperty;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperty;
+        else
+            return false;
     }
 
     /*
@@ -322,128 +289,112 @@ class Document {
       @param string $propertyValue
      */
     public function setProperty($propertyName, $propertyValue) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            if ($propertyValue == '')
-                throw new Exception('Property Value not specified');
+        if ($propertyValue == '')
+            throw new Exception('Property Value not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
 
-            $put_data_arr['Value'] = $propertyValue;
+        $put_data_arr['Value'] = $propertyValue;
 
-            $put_data = json_encode($put_data_arr);
+        $put_data = json_encode($put_data_arr);
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
+        $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $put_data);
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
-            if ($json->Code == 200)
-                return $json->DocumentProperty;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperty;
+        else
+            return false;
     }
 
     public function protectDocument($password, $protectionType = 'AllowOnlyComments') {
-        try {
-            if ($this->fileName == '') {
-                throw new Exception('Base file not specified');
-            }
-            if ($password == '') {
-                throw new Exception('Please Specify A Password');
-            }
-            $fieldsArray = array('Password' => $password, 'ProtectionType' => $protectionType);
-            $json = json_encode($fieldsArray);
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $json);
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output === '') {
-                $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
-                $signedURI = Utils::sign($strURI);
-                $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-                $outputFile = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($responseStream, $outputFile);
-                return $outputFile;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($this->fileName == '') {
+            throw new Exception('Base file not specified');
         }
+        if ($password == '') {
+            throw new Exception('Please Specify A Password');
+        }
+        $fieldsArray = array('Password' => $password, 'ProtectionType' => $protectionType);
+        $json = json_encode($fieldsArray);
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'PUT', 'json', $json);
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+            $outputFile = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($responseStream, $outputFile);
+            return $outputFile;
+        }
+        else
+            return $v_output;
     }
 
     public function unprotectDocument($password, $protectionType = 'AllowOnlyComments') {
-        try {
-            if ($this->fileName == '') {
-                throw new Exception('Base file not specified');
-            }
-            if ($password == '') {
-                throw new Exception('Please Specify A Password');
-            }
-            $fieldsArray = array('Password' => $password, 'ProtectionType' => $protectionType);
-            $json = json_encode($fieldsArray);
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'DELETE', 'json', $json);
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output === '') {
-                $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
-                $signedURI = Utils::sign($strURI);
-                $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-                $outputFile = AsposeApp::$OutPutLocation . $this->FileName;
-                Utils::saveFile($responseStream, $outputFile);
-                return $outputFile;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($this->fileName == '') {
+            throw new Exception('Base file not specified');
         }
+        if ($password == '') {
+            throw new Exception('Please Specify A Password');
+        }
+        $fieldsArray = array('Password' => $password, 'ProtectionType' => $protectionType);
+        $json = json_encode($fieldsArray);
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'DELETE', 'json', $json);
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+            $outputFile = AsposeApp::$OutPutLocation . $this->FileName;
+            Utils::saveFile($responseStream, $outputFile);
+            return $outputFile;
+        }
+        else
+            return $v_output;
     }
 
     public function updateProtection($oldPassword, $newPassword, $protectionType = 'AllowOnlyComments') {
-        try {
-            if ($this->fileName == '') {
-                throw new Exception('Base file not specified');
-            }
-            if ($oldPassword == '') {
-                throw new Exception('Please Specify Old Password');
-            }
-            if ($newPassword == '') {
-                throw new Exception('Please Specify New Password');
-            }
-            $fieldsArray = array('Password' => $oldPassword, 'NewPassword' => $newPassword, 'ProtectionType' => $protectionType);
-            $json = json_encode($fieldsArray);
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
-            $signedURI = Utils::sign($strURI);
-            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
-            $v_output = Utils::validateOutput($responseStream);
-            if ($v_output === '') {
-                $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
-                $signedURI = Utils::sign($strURI);
-                $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-                $outputFile = AsposeApp::$outPutLocation . $this->fileName;
-                Utils::saveFile($responseStream, $outputFile);
-                return $outputFile;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($this->fileName == '') {
+            throw new Exception('Base file not specified');
         }
+        if ($oldPassword == '') {
+            throw new Exception('Please Specify Old Password');
+        }
+        if ($newPassword == '') {
+            throw new Exception('Please Specify New Password');
+        }
+        $fieldsArray = array('Password' => $oldPassword, 'NewPassword' => $newPassword, 'ProtectionType' => $protectionType);
+        $json = json_encode($fieldsArray);
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/protection';
+        $signedURI = Utils::sign($strURI);
+        $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            $strURI = Product::$baseProductUri . '/storage/file/' . $this->fileName;
+            $signedURI = Utils::sign($strURI);
+            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+            $outputFile = AsposeApp::$outPutLocation . $this->fileName;
+            Utils::saveFile($responseStream, $outputFile);
+            return $outputFile;
+        }
+        else
+            return $v_output;
     }
 
     /*
@@ -451,61 +402,53 @@ class Document {
       @param string $propertyName
      */
     public function deleteProperty($propertyName) {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
-            if ($propertyName == '')
-                throw new Exception('Property Name not specified');
+        if ($propertyName == '')
+            throw new Exception('Property Name not specified');
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties/' . $propertyName;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-            
-            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $json = json_decode($responseStream);
+        $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
 
-            if ($json->Code == 200)
-                return true;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        $json = json_decode($responseStream);
+
+        if ($json->Code == 200)
+            return true;
+        else
+            return false;
     }
 
     /*
      * Get Document's properties
      */
     public function getProperties() {
-        try {
-            //check whether files are set or not
-            if ($this->fileName == '')
-                throw new Exception('Base file not specified');
+        //check whether files are set or not
+        if ($this->fileName == '')
+            throw new Exception('Base file not specified');
 
 
-            //build URI to merge Docs
-            $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties';
+        //build URI to merge Docs
+        $strURI = Product::$baseProductUri . '/words/' . $this->fileName . '/documentProperties';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $json = json_decode($responseStream);
+        $json = json_decode($responseStream);
 
 
-            if ($json->Code == 200)
-                return $json->DocumentProperties->List;
-            else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        if ($json->Code == 200)
+            return $json->DocumentProperties->List;
+        else
+            return false;
     }
 
     /*
@@ -515,44 +458,39 @@ class Document {
      * @param string $outputFormat
      */
     public function convertLocalFile($inputPath = '', $outputPath = '', $outputFormat = '') {
-        try {
-            //check whether file is set or not
-            if ($inputPath == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($inputPath == '')
+            throw new Exception('No file name specified');
 
-            if ($outputFormat == '')
-                throw new Exception('output format not specified');
-
-
-            $strURI = Product::$baseProductUri . '/words/convert?format=' . $outputFormat;
-
-            if (!file_exists($inputPath)) {
-                throw new Exception('input file doesnt exist.');
-            }
+        if ($outputFormat == '')
+            throw new Exception('output format not specified');
 
 
-            $signedURI = Utils::sign($strURI);
+        $strURI = Product::$baseProductUri . '/words/convert?format=' . $outputFormat;
 
-            $responseStream = Utils::uploadFileBinary($signedURI, $inputPath, 'xml');
-
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-
-                $save_format = $outputFormat;
-
-                if ($outputPath == '') {
-                    $outputPath = Utils::getFileName($inputPath) . '.' . $save_format;
-                }
-                $output =  AsposeApp::$outPutLocation . $outputPath;
-                Utils::saveFile($responseStream,$output);
-                return true;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if (!file_exists($inputPath)) {
+            throw new Exception('input file doesnt exist.');
         }
-    }
 
+
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::uploadFileBinary($signedURI, $inputPath, 'xml');
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+
+            $save_format = $outputFormat;
+
+            if ($outputPath == '') {
+                $outputPath = Utils::getFileName($inputPath) . '.' . $save_format;
+            }
+            $output =  AsposeApp::$outPutLocation . $outputPath;
+            Utils::saveFile($responseStream,$output);
+            return true;
+        }
+        else
+            return $v_output;
+    }
 }

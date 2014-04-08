@@ -20,60 +20,51 @@ class Extractor {
      * Gets comments from a slide
      */
     public function getComments($slideNo='',$storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '' || $slideNo == '')
-                throw new Exception('Missing required parameters.');
+        //check whether file is set or not
+        if ($this->fileName == '' || $slideNo == '')
+            throw new Exception('Missing required parameters.');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNo . '/comments';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            if($json->Status == 'OK')
-                return $json->SlideComments;
-            else
-                return false;
-
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNo . '/comments';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        if($json->Status == 'OK')
+            return $json->SlideComments;
+        else
+            return false;
     }
 
     /*
      * Gets total number of images in a presentation
      */
     public function getImageCount($storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/images';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return count($json->Images->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/images';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return count($json->Images->List);
     }
 
     /*
@@ -81,28 +72,24 @@ class Extractor {
      * @param $slidenumber
      */
     public function getSlideImageCount($slidenumber, $storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slidenumber . '/images';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return count($json->Images->List);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slidenumber . '/images';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return count($json->Images->List);
     }
 
     /*
@@ -110,41 +97,37 @@ class Extractor {
      * @param $slidenumber
      */
     public function getShapes($slidenumber, $storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slidenumber . '/shapes';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slidenumber . '/shapes';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
+        }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        $shapes = array();
+
+        foreach ($json->ShapeList->ShapesLinks as $shape) {
+
+            $signedURI = Utils::sign($shape->Uri->Href);
 
             $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
             $json = json_decode($responseStream);
-            
-            $shapes = array();
 
-            foreach ($json->ShapeList->ShapesLinks as $shape) {
-
-                $signedURI = Utils::sign($shape->Uri->Href);
-
-                $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-                $json = json_decode($responseStream);
-
-                $shapes[] = $json;
-            }
-
-            return $shapes;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            $shapes[] = $json;
         }
+
+        return $shapes;
     }
 
     /*
@@ -152,26 +135,22 @@ class Extractor {
      * $slideNumber
      */
     public function getColorScheme($slideNumber, $storageName = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get color scheme
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/colorScheme';
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return $json->ColorScheme;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to get color scheme
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/colorScheme';
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return $json->ColorScheme;
     }
 
     /*
@@ -179,26 +158,22 @@ class Extractor {
      * $slideNumber
      */
     public function getFontScheme($slideNumber, $storageName = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get font scheme
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/fontScheme';
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return $json->FontScheme;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to get font scheme
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/fontScheme';
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return $json->FontScheme;
     }
 
     /*
@@ -206,26 +181,22 @@ class Extractor {
      * $slideNumber
      */
     public function getFormatScheme($slideNumber, $storageName = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            //Build URI to get format scheme
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/formatScheme';
-            if ($storageName != '') {
-                $strURI .= '?storage=' . $storageName;
-            }
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return $json->FormatScheme;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        //Build URI to get format scheme
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/theme/formatScheme';
+        if ($storageName != '') {
+            $strURI .= '?storage=' . $storageName;
         }
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return $json->FormatScheme;
     }
 
     /*
@@ -233,29 +204,25 @@ class Extractor {
      * $slideNumber
      */
     public function getPlaceholderCount($slideNumber, $storageName = '', $folder = '') {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/placeholders';
-            if ($folder != '') {
-                $strURI .= '?folder=' . $folder;
-            }
-            if ($storageName != '') {
-                $strURI .= '&storage=' . $storageName;
-            }
-            //Build URI to get placeholders
-            $signedURI = Utils::sign($strURI);
-
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-
-            $json = json_decode($responseStream);
-
-            return count($json->Placeholders->PlaceholderLinks);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $strURI = Product::$baseProductUri . '/slides/' . $this->fileName . '/slides/' . $slideNumber . '/placeholders';
+        if ($folder != '') {
+            $strURI .= '?folder=' . $folder;
         }
+        if ($storageName != '') {
+            $strURI .= '&storage=' . $storageName;
+        }
+        //Build URI to get placeholders
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+
+        $json = json_decode($responseStream);
+
+        return count($json->Placeholders->PlaceholderLinks);
     }
 
     /*
@@ -264,7 +231,6 @@ class Extractor {
      * $placeholderIndex
      */
     public function getPlaceholder($slideNumber, $placeholderIndex, $storageName = '', $folder = '') {
-        try {
             //check whether file is set or not
             if ($this->fileName == '')
                 throw new Exception('No file name specified');
@@ -284,9 +250,6 @@ class Extractor {
             $json = json_decode($responseStream);
 
             return $json->Placeholder;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
     }
 
 }

@@ -17,35 +17,31 @@ class DocumentBuilder {
      * Remove watermark from document
      */
     public function removeWatermark($fileName) {
-        try {
-            //check whether files are set or not
-            if ($fileName == '')
-                throw new Exception('File not specified');
+        //check whether files are set or not
+        if ($fileName == '')
+            throw new Exception('File not specified');
 
-            //build URI to insert watermark image
-            $strURI = Product::$baseProductUri . '/words/' . $fileName .
-                '/watermark';
+        //build URI to insert watermark image
+        $strURI = Product::$baseProductUri . '/words/' . $fileName .
+            '/watermark';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'DELETE', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                //Save doc on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($fileName);
-                $outputPath = AsposeApp::$outPutLocation . $fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            //Save doc on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($fileName);
+            $outputPath = AsposeApp::$outPutLocation . $fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -55,38 +51,34 @@ class DocumentBuilder {
      * @param string $rotationAngle 
      */
     public function insertWatermarkText($fileName, $text, $rotationAngle) {
-        try {
-            //check whether files are set or not
-            if ($fileName == '')
-                throw new Exception('File not specified');
+        //check whether files are set or not
+        if ($fileName == '')
+            throw new Exception('File not specified');
 
-            //Build JSON to post
-            $fieldsArray = array('Text' => $text, 'RotationAngle' => $rotationAngle);
-            $json = json_encode($fieldsArray);
+        //Build JSON to post
+        $fieldsArray = array('Text' => $text, 'RotationAngle' => $rotationAngle);
+        $json = json_encode($fieldsArray);
 
-            //build URI to insert watermark text
-            $strURI = Product::$baseProductUri . '/words/' . $fileName . '/watermark/insertText';
+        //build URI to insert watermark text
+        $strURI = Product::$baseProductUri . '/words/' . $fileName . '/watermark/insertText';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
+        $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                //Save docs on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($fileName);
-                $outputPath = AsposeApp::$outPutLocation . $fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            //Save docs on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($fileName);
+            $outputPath = AsposeApp::$outPutLocation . $fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -96,35 +88,31 @@ class DocumentBuilder {
      * @param string $rotationAngle 
      */
     public function insertWatermarkImage($fileName, $imageFile, $rotationAngle) {
-        try {
-            //check whether files are set or not
-            if ($fileName == '')
-                throw new Exception('File not specified');
+        //check whether files are set or not
+        if ($fileName == '')
+            throw new Exception('File not specified');
 
-            //build URI to insert watermark image
-            $strURI = Product::$baseProductUri . '/words/' . $fileName .
-                    '/watermark/insertImage?imageFile=' . $imageFile . '&rotationAngle=' . $rotationAngle;
+        //build URI to insert watermark image
+        $strURI = Product::$baseProductUri . '/words/' . $fileName .
+                '/watermark/insertImage?imageFile=' . $imageFile . '&rotationAngle=' . $rotationAngle;
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
-            
-            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', '');
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $v_output = Utils::validateOutput($responseStream);
+        $responseStream = Utils::processCommand($signedURI, 'POST', 'json', '');
 
-            if ($v_output === '') {
-                //Save doc on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($fileName);
-                $outputPath = AsposeApp::$outPutLocation . $fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            //Save doc on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($fileName);
+            $outputPath = AsposeApp::$outPutLocation . $fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -136,39 +124,35 @@ class DocumentBuilder {
      * @param string $isMatchWholeWord
      */
     public function replaceText($fileName, $oldValue, $newValue, $isMatchCase, $isMatchWholeWord) {
-        try {
-            //check whether files are set or not
-            if ($fileName == '')
-                throw new Exception('File not specified');
+        //check whether files are set or not
+        if ($fileName == '')
+            throw new Exception('File not specified');
 
-            //Build JSON to post
-            $fieldsArray = array('OldValue' => $oldValue, 'NewValue' => $newValue,
-                'IsMatchCase' => $isMatchCase, 'IsMatchWholeWord' => $isMatchWholeWord);
-            $json = json_encode($fieldsArray);
+        //Build JSON to post
+        $fieldsArray = array('OldValue' => $oldValue, 'NewValue' => $newValue,
+            'IsMatchCase' => $isMatchCase, 'IsMatchWholeWord' => $isMatchWholeWord);
+        $json = json_encode($fieldsArray);
 
-            //build URI to replace text
-            $strURI = Product::$baseProductUri . '/words/' . $fileName . '/replaceText';
+        //build URI to replace text
+        $strURI = Product::$baseProductUri . '/words/' . $fileName . '/replaceText';
 
-            //sign URI
-            $signedURI = Utils::sign($strURI);
+        //sign URI
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
+        $responseStream = Utils::processCommand($signedURI, 'POST', 'json', $json);
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                //Save docs on server
-                $folder = new Folder();
-                $outputStream = $folder->GetFile($fileName);
-                $outputPath = AsposeApp::$outPutLocation . $fileName;
-                Utils::saveFile($outputStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            //Save docs on server
+            $folder = new Folder();
+            $outputStream = $folder->GetFile($fileName);
+            $outputPath = AsposeApp::$outPutLocation . $fileName;
+            Utils::saveFile($outputStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
 }

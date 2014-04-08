@@ -28,29 +28,25 @@ class Converter {
      * @param string $height
      */
     public function convertToImagebySize($pageNumber, $imageFormat, $width, $height) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '?format=' . $imageFormat . '&width=' . $width . '&height=' . $height;
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '?format=' . $imageFormat . '&width=' . $width . '&height=' . $height;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $pageNumber . '.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $pageNumber . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
@@ -59,62 +55,54 @@ class Converter {
      * @param string $imageFormat
      */
     public function convertToImage($pageNumber, $imageFormat) {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '?format=' . $imageFormat;
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '/pages/' . $pageNumber . '?format=' . $imageFormat;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $pageNumber . '.' . $imageFormat;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if ($v_output === '') {
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $pageNumber . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
         }
+        else
+            return $v_output;
     }
 
     /*
      * convert a document by url to SaveFormat
      */
     public function convertByUrl($url='',$format='',$outputFilename='') {
-        try {
-            //check whether file is set or not
-            if ($url == '')
-                throw new Exception('Url not specified');
+        //check whether file is set or not
+        if ($url == '')
+            throw new Exception('Url not specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/convert?url='.$url.'&format='.$format;
+        $strURI = Product::$baseProductUri . '/pdf/convert?url='.$url.'&format='.$format;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'PUT', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'PUT', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                if ($this->saveFormat == 'html') {
-                    $saveFormat = 'zip';
-                } else {
-                    $saveFormat = $this->saveFormat;
-                }
-
-                $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($outputFilename) . '.' . $format);
-                return $outputPath;
+        if ($v_output === '') {
+            if ($this->saveFormat == 'html') {
+                $saveFormat = 'zip';
             } else {
-                return $v_output;
+                $saveFormat = $this->saveFormat;
             }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+
+            $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($outputFilename) . '.' . $format);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
 
@@ -122,33 +110,29 @@ class Converter {
      * convert a document to SaveFormat
      */
     public function convert() {
-        try {
-            //check whether file is set or not
-            if ($this->fileName == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-            $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '?format=' . $this->saveFormat;
+        $strURI = Product::$baseProductUri . '/pdf/' . $this->fileName . '?format=' . $this->saveFormat;
 
-            $signedURI = Utils::sign($strURI);
+        $signedURI = Utils::sign($strURI);
 
-            $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-            $v_output = Utils::validateOutput($responseStream);
+        $v_output = Utils::validateOutput($responseStream);
 
-            if ($v_output === '') {
-                if ($this->saveFormat == 'html') {
-                    $saveFormat = 'zip';
-                } else {
-                    $saveFormat = $this->saveFormat;
-                }
-
-                $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $saveFormat);
-                return $outputPath;
+        if ($v_output === '') {
+            if ($this->saveFormat == 'html') {
+                $saveFormat = 'zip';
             } else {
-                return $v_output;
+                $saveFormat = $this->saveFormat;
             }
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+
+            $outputPath = Utils::saveFile($responseStream, AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '.' . $saveFormat);
+            return $outputPath;
+        } else {
+            return $v_output;
         }
     }
 
@@ -159,47 +143,43 @@ class Converter {
      * @param string $outputFormat
      */
     public function convertLocalFile($inputFile = '', $outputFilename = '', $outputFormat = '') {
-        try {
-            //check whether file is set or not
-            if ($inputFile == '')
-                throw new Exception('No file name specified');
+        //check whether file is set or not
+        if ($inputFile == '')
+            throw new Exception('No file name specified');
 
-            if ($outputFormat == '')
-                throw new Exception('output format not specified');
-
-
-            $strURI = Product::$baseProductUri . '/pdf/convert?format=' . $outputFormat;
-
-            if (!file_exists($inputFile)) {
-                throw new Exception('input file doesnt exist.');
-            }
+        if ($outputFormat == '')
+            throw new Exception('output format not specified');
 
 
-            $signedURI = Utils::sign($strURI);
+        $strURI = Product::$baseProductUri . '/pdf/convert?format=' . $outputFormat;
 
-            $responseStream = Utils::uploadFileBinary($signedURI, $inputFile, 'xml');
-
-            $v_output = Utils::validateOutput($responseStream);
-
-            if ($v_output === '') {
-                if ($outputFormat == 'html') {
-                    $saveFormat = 'zip';
-                } else {
-                    $saveFormat = $outputFormat;
-                }
-
-                if ($outputFilename == '') {
-                    $outputFilename = Utils::getFileName($inputFile) . '.' . $saveFormat;
-                }
-                $outputPath = AsposeApp::$outPutLocation . $outputFilename;
-                Utils::saveFile($responseStream, $outputPath);
-                return $outputPath;
-            }
-            else
-                return $v_output;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        if (!file_exists($inputFile)) {
+            throw new Exception('input file doesnt exist.');
         }
+
+
+        $signedURI = Utils::sign($strURI);
+
+        $responseStream = Utils::uploadFileBinary($signedURI, $inputFile, 'xml');
+
+        $v_output = Utils::validateOutput($responseStream);
+
+        if ($v_output === '') {
+            if ($outputFormat == 'html') {
+                $saveFormat = 'zip';
+            } else {
+                $saveFormat = $outputFormat;
+            }
+
+            if ($outputFilename == '') {
+                $outputFilename = Utils::getFileName($inputFile) . '.' . $saveFormat;
+            }
+            $outputPath = AsposeApp::$outPutLocation . $outputFilename;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        }
+        else
+            return $v_output;
     }
 
 }

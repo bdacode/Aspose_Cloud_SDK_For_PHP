@@ -25,28 +25,24 @@ class Extractor {
 	 * @param $imageFormat
 	 */
 	public function getPicture($worksheetName, $pictureIndex, $imageFormat) {
-		try {
-			//check whether file and sheet is set or not
-			if ($this->fileName == '')
-				throw new Exception('No file name specified');
-			//Build URI
-			$strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/pictures/' . $pictureIndex . '?format=' . $imageFormat;
-			//Sign URI
-			$signedURI = Utils::sign($strURI);
-			//Send request and receive response stream
-			$responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-			//Validate output
-			$v_output = Utils::validateOutput($responseStream);
-			if ($v_output === '') {
-				//Save ouput file
-				$outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
-				Utils::saveFile($responseStream, $outputPath);
-				return $outputPath;
-			} else
-				return $v_output;
-		} catch (Exception $e) {
-			throw new Exception($e -> getMessage());
-		}
+        //check whether file and sheet is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        //Build URI
+        $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/pictures/' . $pictureIndex . '?format=' . $imageFormat;
+        //Sign URI
+        $signedURI = Utils::sign($strURI);
+        //Send request and receive response stream
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        //Validate output
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            //Save ouput file
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else
+            return $v_output;
 	}
 
 	/*
@@ -56,28 +52,24 @@ class Extractor {
 	 * @param $imageFormat
 	 */
 	public function getOleObject($worksheetName, $objectIndex, $imageFormat) {
-		try {
-			//check whether file and sheet is set or not
-			if ($this->fileName == '')
-				throw new Exception('No file name specified');
-			//Build URI
-			$strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/oleobjects/' . $objectIndex . '?format=' . $imageFormat;
-			//Sign URI
-			$signedURI = Utils::sign($strURI);
-			//Send request and receive response stream
-			$responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-			//Validate output
-			$v_output = Utils::validateOutput($responseStream);
-			if ($v_output === '') {
-				//Save ouput file
-				$outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
-				Utils::saveFile($responseStream, $outputPath);
-				return $outputPath;
-			} else
-				return $v_output;
-		} catch (Exception $e) {
-			throw new Exception($e -> getMessage());
-		}
+        //check whether file and sheet is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        //Build URI
+        $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/oleobjects/' . $objectIndex . '?format=' . $imageFormat;
+        //Sign URI
+        $signedURI = Utils::sign($strURI);
+        //Send request and receive response stream
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        //Validate output
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            //Save ouput file
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else
+            return $v_output;
 	}
 
 	/*
@@ -87,28 +79,24 @@ class Extractor {
 	 * @param $imageFormat
 	 */
 	public function getChart($worksheetName, $chartIndex, $imageFormat) {
-		try {
-			//check whether file and sheet is set or not
-			if ($this->fileName == '')
-				throw new Exception('No file name specified');
-			//Build URI
-			$strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/charts/' . $chartIndex . '?format=' . $imageFormat;
-			//Sign URI
-			$signedURI = Utils::sign($strURI);
-			//Send request and receive response stream
-			$responseStream = Utils::processCommand($signedURI, 'GET', '', '');
-			//Validate output
-			$v_output = Utils::validateOutput($responseStream);
-			if ($v_output === '') {
-				//Save ouput file
-				$outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
-				Utils::saveFile($responseStream, $outputPath);
-				return $outputPath;
-			} else
-				return $v_output;
-		} catch (Exception $e) {
-			throw new Exception($e -> getMessage());
-		}
+        //check whether file and sheet is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
+        //Build URI
+        $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/charts/' . $chartIndex . '?format=' . $imageFormat;
+        //Sign URI
+        $signedURI = Utils::sign($strURI);
+        //Send request and receive response stream
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        //Validate output
+        $v_output = Utils::validateOutput($responseStream);
+        if ($v_output === '') {
+            //Save ouput file
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else
+            return $v_output;
 	}
 
 	/*
@@ -118,33 +106,28 @@ class Extractor {
 	 * @param $imageFormat
 	 */
 	public function getAutoShape($worksheetName, $shapeIndex, $imageFormat) {
-		try {
-			//check whether file and sheet is set or not
-			if ($this->fileName == '')
-				throw new Exception('No file name specified');
+        //check whether file and sheet is set or not
+        if ($this->fileName == '')
+            throw new Exception('No file name specified');
 
-			//Build URI
-			$strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/autoshapes/' . $shapeIndex . '?format=' . $imageFormat;
+        //Build URI
+        $strURI = Product::$baseProductUri . '/cells/' . $this->fileName . '/worksheets/' . $worksheetName . '/autoshapes/' . $shapeIndex . '?format=' . $imageFormat;
 
-			//Sign URI
-			$signedURI = Utils::sign($strURI);
+        //Sign URI
+        $signedURI = Utils::sign($strURI);
 
-			//Send request and receive response stream
-			$responseStream = Utils::processCommand($signedURI, 'GET', '', '');
+        //Send request and receive response stream
+        $responseStream = Utils::processCommand($signedURI, 'GET', '', '');
 
-			//Validate output
-			$v_output = Utils::validateOutput($responseStream);
+        //Validate output
+        $v_output = Utils::validateOutput($responseStream);
 
-			if ($v_output === '') {
-				//Save ouput file
-				$outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
-				Utils::saveFile($responseStream, $outputPath);
-				return $outputPath;
-			} else
-				return $v_output;
-		} catch (Exception $e) {
-			throw new Exception($e -> getMessage());
-		}
+        if ($v_output === '') {
+            //Save ouput file
+            $outputPath = AsposeApp::$outPutLocation . Utils::getFileName($this->fileName) . '_' . $worksheetName . '.' . $imageFormat;
+            Utils::saveFile($responseStream, $outputPath);
+            return $outputPath;
+        } else
+            return $v_output;
 	}
-
 }
